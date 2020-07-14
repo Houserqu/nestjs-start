@@ -32,4 +32,8 @@ export const err = {
   PHONE_EXITED: { code: 1206, msg: '手机号已被其他用户绑定' },
   USER_PHONE_EXITED: { code: 1207, msg: '已绑定手机号' },
   USER_INFO_FAIL: { code: 1208, msg: '获取用户信息失败，请先登录' },
+
+  // 数据库相关
+  DB_REDIS_COMMAND_ERROR: { code: 8101, msg: 'Redis 执行命令失败' },
+  DB_REDIS_GET_ERROR: { code: 8102, msg: 'Redis 读取 key 失败' }
 };

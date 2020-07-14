@@ -29,6 +29,7 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
           code: 0,
           msg: '成功',
           t: new Date().getTime(),
+          path: req.url
         };
 
         doAccessLog(req, resBody); // 记录请求日志

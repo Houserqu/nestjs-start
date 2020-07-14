@@ -50,18 +50,34 @@ $ npx nest g service name    # 创建 service
 
 鉴权模块
 
-## 其他
+#### JWT
 
-### JWT
+## 开发
+
+### 代码生成
+
+```bash
+# 最后一个参数 modules 表示生成目录
+npx nest g -h # 帮助
+npx nest g module user modules       # 生成 User 模块
+npx nest g controller user modules   # 生成 User 控制器
+npx nest g service user modules      # 生成 User Service
+```
 
 ### 错误/异常
 
 ### 接口协议
 
-### 认证
+```js
+{
+  code: 200,  // 小于 1000 代表通用错误码，大于 1000 为业务错误码，200 = 成功
+  msg: "成功",
+  data: {...},
+  t: 1594727565012,
+  path: '/'
+}
+```
 
-## 开发
-
-#### 路径别名
+### 路径别名
 
 见 `tsconfig.json`

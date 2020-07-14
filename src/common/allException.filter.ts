@@ -20,12 +20,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
       // ErrorException 是自定义的业务异常，数据结构有拓展，跟 HttpException 不同
       if(exception instanceof ErrorException) {
         code = exceptionBody.code;
-        data = exceptionBody.data;
+        data = exceptionBody.data || null;
         msg = exceptionBody.msg;
         status = 200
       } else {
         code = exception.getStatus();
-        data = exceptionBody.message;
+        data = exceptionBody.message || null;
         msg = exceptionBody.error || exceptionBody.message;
         status = exception.getStatus();
       }

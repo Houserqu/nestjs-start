@@ -1,14 +1,11 @@
 import { HttpService, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import * as tripledes from "crypto-js/tripledes"
-import * as Core from "@alicloud/pop-core"
 import { ConfigService } from '../config/config.service';
 import { ErrorException, err } from '@common/error.exception';
-import { CreateUserDto } from '../user/CreateUserDto.dto';
 import { LoginDto } from './dto/login.dto';
 import { WeAppLoginDto } from './dto/WeAppLoginDto.dto';
-import { CreateWeAppUserDto } from '../user/CreateWeAppUserDto.dto';
+import { CreateWeAppUserDto } from '../user/dto/CreateWeAppUserDto.dto';
 import { WXBizDataCrypt } from '@utils/cryptoUtil';
 import { loggerRequest } from '@common/Log4j.logger';
 
