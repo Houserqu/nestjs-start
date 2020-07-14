@@ -3,8 +3,7 @@ import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './CreateUserDto.dto';
-import { ErrorException } from '../common/error.exception';
-import { err } from '../constant/error';
+import { ErrorException, err } from '@common/error.exception';
 import { CreateWeAppUserDto } from './CreateWeAppUserDto.dto';
 
 @Injectable()

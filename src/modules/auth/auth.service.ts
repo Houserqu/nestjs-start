@@ -4,14 +4,13 @@ import { JwtService } from '@nestjs/jwt';
 import * as tripledes from "crypto-js/tripledes"
 import * as Core from "@alicloud/pop-core"
 import { ConfigService } from '../config/config.service';
-import { ErrorException } from '../common/error.exception';
-import { err } from '../constant/error';
+import { ErrorException, err } from '@common/error.exception';
 import { CreateUserDto } from '../user/CreateUserDto.dto';
-import { LoginDto } from './login.dto';
-import { WeAppLoginDto } from './WeAppLoginDto.dto';
+import { LoginDto } from './dto/login.dto';
+import { WeAppLoginDto } from './dto/WeAppLoginDto.dto';
 import { CreateWeAppUserDto } from '../user/CreateWeAppUserDto.dto';
-import { WXBizDataCrypt } from '../utils/cryptoUtil';
-import { loggerRequest } from '../common/Log4j.logger';
+import { WXBizDataCrypt } from '@utils/cryptoUtil';
+import { loggerRequest } from '@common/Log4j.logger';
 
 @Injectable()
 export class AuthService {

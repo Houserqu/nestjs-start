@@ -1,8 +1,7 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
-import { ErrorException } from './error.exception';
+import { ErrorException, err } from './error.exception';
 import doAccessLog from '../utils/doAccessLog';
 import { loggerError } from './Log4j.logger';
-import { err } from '../constant/error'
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

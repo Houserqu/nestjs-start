@@ -1,15 +1,13 @@
-import { Body, Controller, Get, Post, Query, Req, Request, Res, UseGuards } from '@nestjs/common';
-import { CreateUserDto } from '../user/CreateUserDto.dto';
-import { LoginDto } from './login.dto';
-import { WeAppLoginDto } from './WeAppLoginDto.dto';
+import { Body, Controller, Get, Post, Req, Request, Res, UseGuards } from '@nestjs/common';
+import { LoginDto } from './dto/login.dto';
+import { WeAppLoginDto } from './dto/WeAppLoginDto.dto';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation } from '@nestjs/swagger';
 import { Response } from 'express';
-import { DecodePhoneDto } from './DecodePhoneDto.dto';
-import { ErrorException } from '../common/error.exception';
-import { err } from '../constant/error';
+import { DecodePhoneDto } from './dto/DecodePhoneDto.dto';
+import { ErrorException, err } from '@src/common/error.exception';
 
 @Controller('auth')
 export class AuthController {
@@ -18,6 +16,10 @@ export class AuthController {
     private readonly authService: AuthService,
   ) {}
 
+  /**
+   * 获取个人信息
+   * @param req 
+   */
   @UseGuards(AuthGuard())
   @Get('userinfo')
   @ApiOperation({summary: '个人信息', tags: ['用户鉴权']})
@@ -31,6 +33,11 @@ export class AuthController {
     }
   }
 
+  /**
+   * 账号密码/手机号 登录
+   * @param loginDto 
+   * @param res 
+   */
   @Post('login')
   @ApiOperation({summary: '登陆', tags: ['用户鉴权']})
   async login(@Body() loginDto: LoginDto,  @Res() res) {
@@ -42,6 +49,11 @@ export class AuthController {
     return result
   }
 
+  /**
+   * 小程序登录
+   * @param weAppLoginDto 
+   * @param res 
+   */
   @Post('weAppLogin')
   @ApiOperation({summary: '登陆', tags: ['用户鉴权']})
   async wxlogin(@Body() weAppLoginDto: WeAppLoginDto, @Res() res: Response) {
@@ -51,6 +63,11 @@ export class AuthController {
     res.send({ code: 0, data: result, msg: '成功', t: new Date().getTime()})
   }
 
+  /**
+   * 绑定手机号
+   * @param decodePhoneDto 
+   * @param req 
+   */
   @UseGuards(AuthGuard())
   @Post('bindWechatPhone')
   @ApiOperation({summary: '获取微信绑定的手机号', tags: ['用户鉴权']})

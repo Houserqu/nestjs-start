@@ -8,68 +8,60 @@
 [linux-url]: https://travis-ci.org/nestjs/nest
   
   <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  <p align="center">
 
 ## Description
+ 
+基于 [Nest](https://github.com/nestjs/nest) 快速启动项目，包含了项目开发常用功能模块。
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
+## 命令
 
 ```bash
-# development
-$ npm run start
+$ npm run start       # development
+$ npm run start:dev   # watch mode
+$ npm run pm2         # 正式环境
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ npx nest g module name     # 创建 module
+$ npx nest g controller name # 创建 controller
+$ npx nest g service name    # 创建 service
 ```
 
-## Test
+## 模块
 
-```bash
-# unit tests
-$ npm run test
+### Config
 
-# e2e tests
-$ npm run test:e2e
+配置分类两类，静态配置和动态配置
 
-# test coverage
-$ npm run test:cov
-```
+#### 静态配置
 
-## Support
+.env 文件定义的配置，会根据环境自动加载，重启服务才能生效
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### 动态配置
 
-## Stay in touch
+记录在数据库中的配置，提供了接口进行修改，并且实时生效，适用于业务运营过程中需要修改的配置，例如订单金额上限、控制功能开关
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Helper
 
-## License
+全局模块，工具类方法都封装在该模块中，便于其他模块调用
 
-  Nest is [MIT licensed](LICENSE).
+- httpService: nest 提供的基于 Axios 的请求库，在这个基础上增加了日志记录功能，并对外提供 get,post,axios 方法
+
+### Auth
+
+鉴权模块
+
+## 其他
+
+### JWT
+
+### 错误/异常
+
+### 接口协议
+
+### 认证
+
+## 开发
+
+#### 路径别名
+
+见 `tsconfig.json`

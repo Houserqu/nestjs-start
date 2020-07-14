@@ -1,6 +1,6 @@
 import { Controller, Get, Headers, Req } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Helper } from 'src/helper/helper.service';
+import { Helper } from '../helper/helper.service';
 
 @Controller()
 export class AppController {
