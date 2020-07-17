@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { DBConfigService } from './dbConfig.service';
 
 @Controller('config')
@@ -12,7 +12,7 @@ export class ConfigController {
    * @returns
    * @memberof ConfigController
    */
-  @Post('businessConfig')
+  @Get('businessConfig')
   async getBusinessConfig() {
     return await this.dbConfigService.geConfigs('BUSINESS')
   }

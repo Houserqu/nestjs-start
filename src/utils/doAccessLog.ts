@@ -7,5 +7,10 @@ import { Request } from 'express';
  * @param resBody
  */
 export default function doAccessLog(req: Request, resBody: any): void {
-  loggerAccess.info(`method=${req.method}&ip=${req.ip}&ua=${req.headers['user-agent']}&url=${req.url}&jwt=${JSON.stringify(req.user)}query=${JSON.stringify(req.query)}&reqBody=${JSON.stringify(req.body)}&resBody=${JSON.stringify(resBody)}`);
+  const info = `method=${req.method}&ip=${req.ip}&ua=${req.headers['user-agent']}&url=${req.url}&jwt=${JSON.stringify(req.user)}query=${JSON.stringify(req.query)}&reqBody=${JSON.stringify(req.body)}&resBody=${JSON.stringify(resBody)}`
+  if(process.env.NODE_ENV === 'development'){
+    console.log(info)
+  } else{
+    loggerAccess.info(info);
+  } 
 }

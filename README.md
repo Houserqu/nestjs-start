@@ -82,6 +82,12 @@ npx nest g service user modules      # 生成 User Service
 }
 ```
 
+### 日志
+
+开发环境时，所有日志都在控制台输出，非开发环境通过 log4j 输出到 logs 目录中。
+不同类型到日志输出到不同的文件中，并根据日期切割，保留 15 天。
+各类型日志方法都通过 src/common/Log4j.logger.ts 对外提供，可以自行拓展日志类型。
+
 ### 路径别名
 
 见 `tsconfig.json`

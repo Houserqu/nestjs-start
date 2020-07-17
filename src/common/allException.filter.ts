@@ -37,7 +37,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
       data = null
       
       // 记录错误堆栈信息到日志中
-      loggerError.error(exception.message, exception.stack)
+      if(process.env.NODE_ENV === 'development') {
+        console.log(exception.message, exception.stack)
+      } else {
+        loggerError.error(exception.message, exception.stack)
+      }
     }
 
     response.status(status);

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '../config/config.service';
+import { TypeOrmLogger } from './typeOrmLogger';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConfigService } from '../config/config.service';
         entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: false,
         logging: process.env.NODE_ENV === 'development' ? 'all': false,
+        logger: process.env.NODE_ENV === 'development' ? 'advanced-console' : new TypeOrmLogger()
       }),
       inject: [ConfigService],
     }),

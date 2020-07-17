@@ -33,6 +33,10 @@ log4js.configure({
       filename: path.resolve('./logs/request.log'),
       ...commonConfig
     },
+    db: {
+      filename: path.resolve('./logs/db.log'),
+      ...commonConfig
+    },
   },
   categories: {
     default: {
@@ -54,6 +58,10 @@ log4js.configure({
     request: {
       appenders: ['request'],
       level: 'INFO'
+    },    
+    db: {
+      appenders: ['db'],
+      level: 'INFO'
     },
   },
   pm2: isProd
@@ -64,6 +72,7 @@ export const loggerAccess = log4js.getLogger('access');
 export const loggerError = log4js.getLogger('error');
 export const loggerDebug = log4js.getLogger('debug');
 export const loggerRequest = log4js.getLogger('request'); // 调用外部服务请求的日志
+export const loggerDB = log4js.getLogger('db'); // 调用外部服务请求的日志
 
 export class Log4j extends Logger {
   constructor() {
