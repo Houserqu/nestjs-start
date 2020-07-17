@@ -8,8 +8,6 @@ import { ErrorException, err } from '@src/common/error.exception';
 export class RedisService {
   // 实例化后的 redis client 对象
   private readonly client: redis.RedisClient
-  private readonly getAsync
-  private readonly setAsync: Function
   private readonly sendCommand: Function
 
   constructor(

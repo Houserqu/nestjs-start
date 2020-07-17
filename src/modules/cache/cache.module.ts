@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { RedisService } from './cache.service';
+import { RedisService } from './redis.service';
 import { CacheController } from './cache.controller';
 
 /**
@@ -10,6 +10,7 @@ import { CacheController } from './cache.controller';
   providers: [
     RedisService
   ],
-  controllers: [CacheController]
+  controllers: [CacheController],
+  exports: [RedisService]
 })
 export class CacheModule {}

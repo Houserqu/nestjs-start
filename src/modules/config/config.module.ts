@@ -2,13 +2,13 @@ import { Module, Global } from '@nestjs/common';
 import { ConfigService } from './config.service';
 import { ConfigController } from './config.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Config } from './config.entity';
+import { DBConfig } from './dbConfig.entity';
 import { DBConfigService } from './dbConfig.service';
 
 @Global()
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Config])
+    TypeOrmModule.forFeature([DBConfig]),
   ],
   providers: [
     {

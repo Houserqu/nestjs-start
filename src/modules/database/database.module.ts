@@ -14,6 +14,7 @@ import { ConfigService } from '../config/config.service';
         database: configService.get('MYSQL_DATABASE'),
         entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: false,
+        logging: process.env.NODE_ENV === 'development' ? 'all': false,
       }),
       inject: [ConfigService],
     }),
