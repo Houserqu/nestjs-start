@@ -52,6 +52,10 @@ $ npx nest g service name    # 创建 service
 
 #### JWT
 
+### MQ
+
+消息队列模块，默认使用的是 Rabbitmq，提供了基本的连接、订阅、发布示例
+
 ## 开发
 
 ### 代码生成
