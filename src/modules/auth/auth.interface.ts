@@ -5,7 +5,7 @@ export interface JwtPayload {
 
   nickname: string;
 
-  exp: number;
+  exp?: number;
 
-  iat: number
+  iat?: number
 }

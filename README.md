@@ -26,7 +26,9 @@ $ npx nest g controller name # 创建 controller
 $ npx nest g service name    # 创建 service
 ```
 
-## 目录结构
+## 规范
+
+### 目录结构
 
 ```
 .
@@ -77,10 +79,6 @@ $ npx nest g service name    # 创建 service
 └── yarn.lock
 ```
 
-## 规范
-
-### 目录结构
-
 Nest.js 是基于模块的方式进行依赖管理的，所以以模块为单位组织代码，一个功能模块相关的代码都在一个目录下，而不是一个目录包含所有模块某类文件，例如不再用 controllers 目录去放所有模块的 controller 文件，而是每个 controller 都自行放到对应的模块目录下。这样的好处是功能划分更加清新，不同功能的代码不再纠缠在一起，当需要调整一个模块的时候，更加方便。
 
 独立于模块的文件可以用跟 modules 并列的目录去保存，例如 utils 目录，保存的时候各类工具方法，是解决通用问题的，没有功能模块的属性，不需要依赖注入。
@@ -90,6 +88,68 @@ common 目录是保存所有公共中间件、拦截器、管道等，与模块�
 ### 控制器与服务
 
 controller 负责处理请求和响应，不会直接和数据层接触，而是调用一个或多个 service 去完成想要实现的业务功能。service 层与数据层进行交互，向上提供方法，service 的方法尽可能小，只完成一个功能。
+
+**参数校验**
+使用基于类的参数校验方式，并通过管道装饰器完成验证
+
+**获取 Jwt Payload**
+被 `@UseGuards(AuthGuard())` 装饰的控制器，代表需要 Jwt 校验，通过校验后，可以用 @Jwt() 注解拿到 Jwt 的 Payload
+
+```ts
+class LoginDto {
+  @IsString()
+  phone: string;
+
+  @IsString()
+  password: string;
+}
+
+@Controller()
+export class AppController {
+  ...
+  @UseGuards(AuthGuard())
+  @Post()
+  async getHello(@Body() body: IndexBodyDto, @Jwt() jwt: JwtPayload): Promise<any> {
+    ...
+    return jwt
+  }
+  ...
+}
+```
+
+### 错误/异常 (待定)
+
+全局范围添加了异常过滤器（src/common/allException.filter.ts），会拦截所有异常，格式化响应体。
+对于业务逻辑类异常，封装了 ErrorException 异常类，继承于框架自带的 HttpException。ErrorException 构造方法接受固定格式的错误码对象，错误码对象需要在 src/common/error.exception.ts 文件中集中定义。使用示例如下：
+
+```js
+// 定义用户信息失败异常
+const err = {
+  ...,
+  USER_INFO_FAIL: { code: 1208, msg: '获取用户信息失败，请先登录' },
+}
+
+// 业务逻辑中抛出异常
+throw new ErrorException(err.USER_INFO_FAIL)
+```
+
+### 接口协议
+
+```js
+{
+  code: 200,  // 小于 1000 代表通用错误码，大于 1000 为业务错误码，200 = 成功
+  msg: "成功",
+  data: {...},
+  t: 1594727565012,
+  path: '/'
+}
+```
+
+### 日志
+
+开发环境时，所有日志都在控制台输出，非开发环境通过 log4j 输出到 logs 目录中。
+不同类型到日志输出到不同的文件中，并根据日期切割，保留 15 天。
+各类型日志方法都通过 src/common/Log4j.logger.ts 对外提供，可以自行拓展日志类型。
 
 ## 系统模块
 
@@ -129,41 +189,7 @@ controller 负责处理请求和响应，不会直接和数据层接触，而是
 
 消息队列模块，默认使用的是 Rabbitmq，提供了基本的连接、订阅、发布示例
 
-## 开发
-
-### 错误/异常 (待定)
-
-全局范围添加了异常过滤器（src/common/allException.filter.ts），会拦截所有异常，格式化响应体。
-对于业务逻辑类异常，封装了 ErrorException 异常类，继承于框架自带的 HttpException。ErrorException 构造方法接受固定格式的错误码对象，错误码对象需要在 src/common/error.exception.ts 文件中集中定义。使用示例如下：
-
-```js
-// 定义用户信息失败异常
-const err = {
-  ...,
-  USER_INFO_FAIL: { code: 1208, msg: '获取用户信息失败，请先登录' },
-}
-
-// 业务逻辑中抛出异常
-throw new ErrorException(err.USER_INFO_FAIL)
-```
-
-### 接口协议
-
-```js
-{
-  code: 200,  // 小于 1000 代表通用错误码，大于 1000 为业务错误码，200 = 成功
-  msg: "成功",
-  data: {...},
-  t: 1594727565012,
-  path: '/'
-}
-```
-
-### 日志
-
-开发环境时，所有日志都在控制台输出，非开发环境通过 log4j 输出到 logs 目录中。
-不同类型到日志输出到不同的文件中，并根据日期切割，保留 15 天。
-各类型日志方法都通过 src/common/Log4j.logger.ts 对外提供，可以自行拓展日志类型。
+## 其他
 
 ### 代码生成
 

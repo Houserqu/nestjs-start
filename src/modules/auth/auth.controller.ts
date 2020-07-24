@@ -64,7 +64,7 @@ export class AuthController {
   }
 
   /**
-   * 绑定手机号
+   * 小程序绑定手机号
    * @param decodePhoneDto 
    * @param req 
    */

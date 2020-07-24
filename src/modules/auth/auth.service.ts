@@ -8,6 +8,7 @@ import { WeAppLoginDto } from './dto/WeAppLoginDto.dto';
 import { CreateWeAppUserDto } from '../user/dto/CreateWeAppUserDto.dto';
 import { WXBizDataCrypt } from '@utils/cryptoUtil';
 import { loggerRequest } from '@common/Log4j.logger';
+import { JwtPayload } from './auth.interface'
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,13 @@ export class AuthService {
     private readonly httpService: HttpService
   ) {}
 
+  /**
+   * 手机号 和 密码 校验用户
+   * @param {string} phone
+   * @param {string} password
+   * @returns {Promise<any>}
+   * @memberof AuthService
+   */
   async validateUser(phone: string, password: string): Promise<any> {
     const user = await this.userService.findOne(phone);
     if (user && user.password === password) {
@@ -27,7 +35,14 @@ export class AuthService {
     return null;
   }
 
-  async loginByPassword(loginDto: LoginDto): Promise<any> {
+  /**
+   * 手机号和密码登录（jwt）
+   *
+   * @param {LoginDto} loginDto
+   * @returns {Promise<any>}
+   * @memberof AuthService
+   */
+  async loginByPassword(loginDto: LoginDto): Promise<{accessToken: string, userInfo: any}> {
     const user = await this.userService.findOne(loginDto.phone);
     if (user && user.password === loginDto.password) {
       const { password, id, ...rest } = user
@@ -40,6 +55,12 @@ export class AuthService {
     }
   }
 
+  /**
+   * 小程序登录（unionid 方式）
+   * @param {WeAppLoginDto} weAppLoginDto
+   * @returns {Promise<any>}
+   * @memberof AuthService
+   */
   async loginByWeApp(weAppLoginDto: WeAppLoginDto): Promise<any> {
     const url = "https://api.weixin.qq.com/sns/jscode2session";
     const appid = this.configService.get('WEAPP_APPID');
@@ -61,8 +82,10 @@ export class AuthService {
       const user = await this.userService.findOneByUnionid(encryptedInfo.unionId);
       if(user) {
         const { password, id, ...rest } = user
+        const data: JwtPayload = { userId: user.id, phone: user.phone, nickname: user.nickname }
+
         return {
-          accessToken: this.jwtService.sign({ userId: user.id, phone: user.phone, nickname: user.nickname }),
+          accessToken: this.jwtService.sign(data),
           userInfo: rest
         }
       } else {
@@ -90,6 +113,15 @@ export class AuthService {
     }
   }
 
+  /**
+   * 通过小程序获取手机号并绑定
+   * @param {string} code
+   * @param {string} encryptedData
+   * @param {string} iv
+   * @param {number} userId
+   * @returns {Promise<any>}
+   * @memberof AuthService
+   */
   async bindWechatPhone(code: string, encryptedData: string, iv: string, userId: number): Promise<any> {
     const url ="https://api.weixin.qq.com/sns/jscode2session";
     const appid = this.configService.get('WEAPP_APPID');
@@ -110,7 +142,12 @@ export class AuthService {
     }
   }
 
-  // 获取 jwt 的 payload
+  /**
+   * 根据 jwt token 获取 payload
+   * @param {string} token
+   * @returns {Promise<any>}
+   * @memberof AuthService
+   */
   async getJwtPayload(token: string): Promise<any> {
     try{
       return this.jwtService.verify(token)
