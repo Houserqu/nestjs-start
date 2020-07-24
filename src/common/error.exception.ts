@@ -19,7 +19,7 @@ export class ErrorException extends HttpException {
 export const err = {
   // 通用错误
   INTERNAL_SERVER_ERROR: { code: 500, msg: '系统内部错误' },
-  PARAMS_ERROR: { code: 1000, msg: '参数错误' },
+  PARAMS_ERROR: { code: 400, msg: '参数错误' },
 
   // 用户相关
   CREATE_PHONE_EXITED: { code: 1200, msg: '该手机号已注册' },

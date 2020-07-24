@@ -5,6 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from './common/allException.filter';
 import { TransformInterceptor } from './common/transform.interceptor';
 import { Log4j } from './common/Log4j.logger';
+import { ErrorException, err } from './common/error.exception';
+import * as _ from 'lodash'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -28,7 +30,13 @@ async function bootstrap() {
   }
 
   // 全局参数校验 pipe
-  app.useGlobalPipes(new ValidationPipe({transform: true}));
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true, 
+    // 自定义异常
+    exceptionFactory: (errors) => new ErrorException(
+      err.PARAMS_ERROR, _.flatten(errors.filter(item => !!item.constraints)
+      .map(item => Object.values(item.constraints))
+    ))}));
 
   // 异常过滤器，格式化输出
   app.useGlobalFilters(new AllExceptionsFilter());
