@@ -1,0 +1,26 @@
+version: '3'
+
+services: 
+  mysql:
+    image: mysql:5.7
+    container_name: nestjs-mysql
+    restart: always
+    ports: 
+      - 3310:3306
+    volumes: 
+      - ./data/mysql:/var/lib/mysql
+      - ./doc/mysql-init/:/docker-entrypoint-initdb.d
+    environment: 
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'nestjs'
+      MYSQL_USER: 'nestjs'
+      MYSQL_PASSWORD: 'nestjs'
+  
+  redis:
+    image: redis:latest
+    container_name: nestjs-redis
+    command: redis-server --requirepass nestjs
+    ports:
+      - 6379:6379
+    volumes: 
+      - ./data/redis:/data

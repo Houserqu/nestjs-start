@@ -189,6 +189,49 @@ throw new ErrorException(err.USER_INFO_FAIL)
 
 消息队列模块，默认使用的是 Rabbitmq，提供了基本的连接、订阅、发布示例
 
+## Docker
+
+真的开发环境和生产环境提供了 Docker 支持，省去各种安装工作。也可以不使用。
+
+### 开发
+
+为了便于本地开发，项目支持通过 docker compose 快速创建 mysql 和 redis 服务。
+
+**启动命令：**
+
+```bash
+docker-compose -f "docker-compose.yml" up -d
+```
+
+**默认暴露到宿主的端口**
+- Mysql 3310
+- Redis 6379
+
+本地开发时 node 代码则没有用 docker 容器去跑，因为本地开发可能需要经常执行命令、重启服务等，用容器去跑有点多余。
+
+### 部署
+
+提供了基于 Docker 部署方式，可以不需要安装相关环境，直接运行。
+
+**构建生产环境镜像前准备**
+
+- 由于 Docker 不通系统上网络会有些差别，请根据实际情况修改 .env 配置文件中 mysql，redis 等服务的连接地址。
+- 下面提供的 Docker 相关命令可以根据实际需求修改
+- logs 日志文件需要挂载到宿主机上，避免丢失
+
+**构建和启动命令：**
+
+```bash
+# 构建镜像 (nestjs-start为镜像名称，可以自定义)
+docker build -t nestjs-start . 
+
+# 创建容器并挂载日志目录
+docker run -p 8000:8000 -d -v {本地日志绝对路径}:/usr/src/app/logs nestjs-start
+
+# 进入容器
+docker exec -it {容器ID} /bin/bash
+```
+
 ## 其他
 
 ### 代码生成

@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { DBConfigService } from './dbConfig.service';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('config')
 export class ConfigController {
@@ -12,6 +13,7 @@ export class ConfigController {
    * @returns
    * @memberof ConfigController
    */
+  @ApiOperation({summary: '业务配置', tags: ['配置']})
   @Get('businessConfig')
   async getBusinessConfig() {
     return await this.dbConfigService.geConfigs('BUSINESS')
