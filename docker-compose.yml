@@ -24,3 +24,16 @@ services:
       - 6379:6379
     volumes: 
       - ./data/redis:/data
+
+  rabbitmq:
+    image: rabbitmq:3.8-rc-management
+    container_name: nestjs-rabbitmq
+    restart: always
+    ports: 
+      - 5672:5672
+      - 15672:15672
+    volumes: 
+      - ./data/rabbitmq:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=nestjs
+      - RABBITMQ_DEFAULT_PASS=nestjs
