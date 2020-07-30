@@ -196,8 +196,31 @@ typeorm 需要提前给每个表创建实体类，手动创建比较繁琐，可
 
 #### 权限控制 (RABC)
 
-RBAC（基于角色的权限控制）是企业软件常用的权限管理技术，
-（待实现）
+RBAC（基于角色的权限控制）是企业软件常用的权限管理技术，提供了开箱即用的 RBAC 鉴权功能，依赖 mysql 权限相关表。
+默认支持 API（接口） 类型和 MENU（菜单）权限类型，对于 API 权限支持通过装饰器的方式编写鉴权逻辑，非常方便。
+
+**API 鉴权使用方式**
+
+1. 注册鉴权守卫，默认注册在根模块
+   ```ts
+    providers: [
+      {
+        // 全局注册 RBAC 权限守卫, 配合 Permission 装饰器使用
+        provide: APP_GUARD,
+        useClass: PermissionGuard,
+      },
+      ...
+    ],
+   ```
+2. 在需要鉴权的路由上用 `@Permission()` 装饰器声明权限，执行方法前鉴权守卫通过装饰器拿到需要的权限code，再去查找用户的 API 类型的权限，并判断声明的权限是否都拥有，如果没有则返回 ForbidException 异常
+   ```ts
+    @Get('needPermission')
+    @Permission('DEMO')   // 权限声明装饰器
+    @ApiOperation({summary: '角色权限守卫demo', tags: ['用户鉴权']})
+    async needPermission(): Promise<any> {
+      return 'success'
+    }
+   ```
 
 ### MQ
 

@@ -76,14 +76,4 @@ export class AuthController {
     const { code, encryptedData, iv } = decodePhoneDto;
     return await this.authService.bindWechatPhone(code, encryptedData, iv, req.user.userId)
   }
-
-  /**
-   * 角色权限守卫demo
-   */
-  @Get('needRolePermission')
-  @Permission('DEMO')
-  @ApiOperation({summary: '角色权限守卫demo', tags: ['用户鉴权']})
-  async needRolePermission(): Promise<any> {
-    return 'success'
-  }
 }
