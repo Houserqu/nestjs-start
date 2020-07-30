@@ -1,14 +1,10 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity } from "typeorm";
 
-@Index("code", ["code"], { unique: true })
 @Entity("auth_permission", { schema: "nestjs" })
 export class AuthPermission {
-  @PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
-  id: number;
-
   @Column("varchar", {
+    primary: true,
     name: "code",
-    unique: true,
     comment: "权限code",
     length: 225,
   })

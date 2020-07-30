@@ -8,6 +8,7 @@ import { ApiOperation } from '@nestjs/swagger';
 import { Response } from 'express';
 import { DecodePhoneDto } from './dto/DecodePhoneDto.dto';
 import { ErrorException, err } from '@src/common/error.exception';
+import { Permission } from './permission.decorator'
 
 @Controller('auth')
 export class AuthController {
@@ -74,5 +75,15 @@ export class AuthController {
   async bindWechatPhone(@Body() decodePhoneDto: DecodePhoneDto, @Req() req): Promise<any> {
     const { code, encryptedData, iv } = decodePhoneDto;
     return await this.authService.bindWechatPhone(code, encryptedData, iv, req.user.userId)
+  }
+
+  /**
+   * 角色权限守卫demo
+   */
+  @Get('needRolePermission')
+  @Permission('DEMO')
+  @ApiOperation({summary: '角色权限守卫demo', tags: ['用户鉴权']})
+  async needRolePermission(): Promise<any> {
+    return 'success'
   }
 }

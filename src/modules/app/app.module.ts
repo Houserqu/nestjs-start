@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from '../user/user.module';
@@ -6,6 +7,7 @@ import { AuthModule } from '../auth/auth.module';
 import { ConfigModule } from '../config/config.module';
 import { DatabaseModule } from '../database/database.module';
 import { HelperModule } from '../helper/helper.module';
+import { PermissionGuard } from '@modules/auth/permission.guard';
 // import { CacheModule } from '@modules/cache/cache.module';
 // import { MQModule } from '@modules/mq/mq.module';
 
@@ -23,9 +25,16 @@ import { HelperModule } from '../helper/helper.module';
     ConfigModule,
     DatabaseModule,
     // CacheModule, 缓存
-    // MQModule 消息队列
+    // MQModule     消息队列
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      // 全局注册 RBAC 权限守卫, 配合 Permission 装饰器使用
+      provide: APP_GUARD,
+      useClass: PermissionGuard,
+    },
+  ],
 })
 export class AppModule {}
