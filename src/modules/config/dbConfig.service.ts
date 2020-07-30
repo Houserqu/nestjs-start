@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DBConfig } from './dbConfig.entity';
+import { Config as DBConfig } from '@entity/Config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as _ from 'lodash';

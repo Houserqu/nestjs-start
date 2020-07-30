@@ -15,6 +15,7 @@
       "@utils/*": ["./src/utils/*"],
       "@src/*": ["./src/*"],
       "@common/*": ["./src/common/*"],
+      "@entity/*": ["./src/entity/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

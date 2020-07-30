@@ -19,7 +19,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "db": "rm -rf src/entity && typeorm-model-generator -h 127.0.0.1 -d nestjs -u nestjs -x nestjs -p 3310 -e mysql --noConfig true -o ./src/entity"
   },
   "dependencies": {
     "@alicloud/pop-core": "^1.7.9",
@@ -73,6 +74,7 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0",
+    "typeorm-model-generator": "^0.4.2",
     "typescript": "^3.7.4"
   },
   "jest": {

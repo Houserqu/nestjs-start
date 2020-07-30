@@ -165,6 +165,19 @@ throw new ErrorException(err.USER_INFO_FAIL)
 
 记录在数据库中的配置，提供了接口进行修改，并且实时生效，适用于业务运营过程中需要修改的配置，例如订单金额上限、控制功能开关等。
 
+### Database
+
+数据库注册模块
+
+#### Typeorm
+
+基于TypeScript 的 ORM 库. 支持 MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana, WebSQL 数据库。
+
+**生成实体**
+
+typeorm 需要提前给每个表创建实体类，手动创建比较繁琐，可以通过 `npm run db` 命令直接同步数据库表结构自动创建实体类。
+> 数据库连接配置可以在 package.json 文件对应的 script 中修改
+
 ### Helper
 
 全局模块，工具类方法都封装在该模块中，便于其他模块调用
@@ -181,8 +194,9 @@ throw new ErrorException(err.USER_INFO_FAIL)
 
 缺点：jwt token 签发后无法废止，存在被恶意盗用的风险。
 
-#### 权限控制 RABC
+#### 权限控制 (RABC)
 
+RBAC（基于角色的权限控制）是企业软件常用的权限管理技术，
 （待实现）
 
 ### MQ

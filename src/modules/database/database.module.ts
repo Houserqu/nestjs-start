@@ -13,7 +13,7 @@ import { TypeOrmLogger } from './typeOrmLogger';
         username: configService.get('MYSQL_USER'),
         password: configService.get('MYSQL_PASSWORD'),
         database: configService.get('MYSQL_DATABASE'),
-        entities: ['dist/**/*.entity{.ts,.js}'],
+        entities: ['dist/entity/*.js'],
         synchronize: false,
         logging: process.env.NODE_ENV === 'development' ? 'all': false,
         logger: process.env.NODE_ENV === 'development' ? 'advanced-console' : new TypeOrmLogger()

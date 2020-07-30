@@ -2,7 +2,7 @@ import { Module, Global } from '@nestjs/common';
 import { ConfigService } from './config.service';
 import { ConfigController } from './config.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DBConfig } from './dbConfig.entity';
+import { Config as DBConfig } from '@entity/Config';
 import { DBConfigService } from './dbConfig.service';
 
 @Global()
