@@ -8,6 +8,9 @@ import { ConfigModule } from '../config/config.module';
 import { DatabaseModule } from '../database/database.module';
 import { HelperModule } from '../helper/helper.module';
 import { PermissionGuard } from '@modules/auth/permission.guard';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 // import { CacheModule } from '@modules/cache/cache.module';
 // import { MQModule } from '@modules/mq/mq.module';
 
@@ -24,6 +27,9 @@ import { PermissionGuard } from '@modules/auth/permission.guard';
     AuthModule,
     ConfigModule,
     DatabaseModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', '..', 'static'), // 静态文件目录
+    })
     // CacheModule, 缓存
     // MQModule     消息队列
   ],

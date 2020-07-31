@@ -1,18 +1,12 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
+</p>  
   <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
   <p align="center">
 
 ## Description
  
-基于 [Nest](https://github.com/nestjs/nest) 快速启动项目，包含了项目开发常用功能模块。
+基于 [Nest](https://github.com/nestjs/nest) 快速启动项目，包含了项目开发常用功能模块和最佳实践。
 
 ## 命令
 
@@ -72,6 +66,7 @@ $ npx nest g service name    # 创建 service
 │   │   └── user                      // 用户模块
 │   │       └── ...
 │   └── utils                         // 工具方法
+├── static                            // 静态文件目录
 ├── test                              // 单元测试目录
 │   └── ...
 ├── tsconfig.build.json
