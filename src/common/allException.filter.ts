@@ -37,7 +37,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       // 系统错误
       status = HttpStatus.INTERNAL_SERVER_ERROR
       code = err.INTERNAL_SERVER_ERROR.code
-      msg = err.INTERNAL_SERVER_ERROR.msg
+      msg = err.INTERNAL_SERVER_ERROR.message
       data = null
       
       // 记录错误堆栈信息到日志中
