@@ -1,10 +1,14 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { ErrorException, err } from './error.exception';
-import doAccessLog from '../utils/doAccessLog';
-import { loggerError } from './Log4j.logger';
+import { Logger } from '@modules/logger/logger.service';
+
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
+  constructor(
+    private readonly logger: Logger
+  ){}
+
   catch(exception: any, host: ArgumentsHost) {
 
     const ctx = host.switchToHttp();
@@ -37,11 +41,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       data = null
       
       // 记录错误堆栈信息到日志中
-      if(process.env.NODE_ENV === 'development') {
-        console.log(exception.message, exception.stack)
-      } else {
-        loggerError.error(exception.message, exception.stack)
-      }
+      this.logger.error(exception.message, exception.stack)
     }
 
     response.status(status);
@@ -51,7 +51,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const resBody = { code, data, msg, t: new Date().getTime(), path: request.url };
 
     // 打印请求日志
-    doAccessLog(request, resBody);
+    this.logger.doAccessLog(request, resBody);
 
     response.send(resBody);
   }

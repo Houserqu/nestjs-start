@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '../config/config.service';
-import { TypeOrmLogger } from './typeOrmLogger';
+import { TypeOrmLogger } from '@modules/logger/typeOrmLogger.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      useFactory: configService => ({
+      useFactory: (configService, typeOrmLogger) => ({
         type: 'mysql',
         host: configService.get('MYSQL_HOST'),
         port: configService.get('MYSQL_PORT'),
@@ -16,9 +16,9 @@ import { TypeOrmLogger } from './typeOrmLogger';
         entities: ['dist/entity/*.js'],
         synchronize: false,
         logging: process.env.NODE_ENV === 'development' ? 'all': false,
-        logger: process.env.NODE_ENV === 'development' ? 'advanced-console' : new TypeOrmLogger()
+        logger: process.env.NODE_ENV === 'development' ? 'advanced-console' : typeOrmLogger
       }),
-      inject: [ConfigService],
+      inject: [ConfigService, TypeOrmLogger],
     }),
   ],
 })

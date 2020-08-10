@@ -2,16 +2,16 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@modules/app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
-import { AllExceptionsFilter } from './common/allException.filter';
-import { TransformInterceptor } from './common/transform.interceptor';
-import { Log4j } from './common/Log4j.logger';
 import { ErrorException, err } from './common/error.exception';
 import * as _ from 'lodash'
+import { Logger } from '@modules/logger/logger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: new Log4j()
+    logger: false
   });
+
+  app.useLogger(app.get(Logger))
 
   // 跨域配置
   app.enableCors({
@@ -37,11 +37,6 @@ async function bootstrap() {
       err.PARAMS_ERROR, _.flatten(errors.filter(item => !!item.constraints)
       .map(item => Object.values(item.constraints))
     ))}));
-
-  // 异常过滤器，格式化输出
-  app.useGlobalFilters(new AllExceptionsFilter());
-
-  app.useGlobalInterceptors(new TransformInterceptor());
 
   await app.listen(8000);
 }

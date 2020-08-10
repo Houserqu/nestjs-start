@@ -7,7 +7,6 @@ import { LoginDto } from './dto/login.dto';
 import { WeAppLoginDto } from './dto/WeAppLoginDto.dto';
 import { CreateWeAppUserDto } from '../user/dto/CreateWeAppUserDto.dto';
 import { WXBizDataCrypt } from '@utils/cryptoUtil';
-import { loggerRequest } from '@common/Log4j.logger';
 import { JwtPayload } from './auth.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
@@ -15,6 +14,7 @@ import { AuthPermission } from '@src/entity/AuthPermission';
 import { AuthUserRole } from '@src/entity/AuthUserRole';
 import { AuthRolePermission } from '@src/entity/AuthRolePermission';
 import * as _ from 'lodash';
+import { Logger } from '@modules/logger/logger.service';
 
 @Injectable()
 export class AuthService {
@@ -23,6 +23,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
+    private readonly logger: Logger,
 
     @InjectRepository(AuthPermission)
     private readonly permissionRepository: Repository<AuthPermission>,
@@ -89,7 +90,7 @@ export class AuthService {
     const requestUrl = `${url}?appid=${appid}&secret=${secret}&grant_type=${grantType}&js_code=${weAppLoginDto.code}`;
     const codeRes: any = await this.httpService.get(requestUrl).toPromise();
 
-    loggerRequest.info(requestUrl, codeRes.data);
+    this.logger.doRequestLog(requestUrl, codeRes.data)
 
     // 从加密数据中获取 unionid
     const encryptedInfo = WXBizDataCrypt(

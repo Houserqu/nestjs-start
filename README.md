@@ -34,7 +34,6 @@ $ npx nest g service name    # 创建 service
 ├── production.env                    // 生产环境静态配置
 ├── src
 │   ├── common                        // 公共组件目录
-│   │   ├── Log4j.logger.ts           // 自定义日志
 │   │   ├── allException.filter.ts    // 所有异常过滤器
 │   │   ├── error.exception.ts        // 业务异常类
 │   │   └── transform.interceptor.ts  // 响应体格式转换拦截器
@@ -144,7 +143,7 @@ throw new ErrorException(err.USER_INFO_FAIL)
 
 开发环境时，所有日志都在控制台输出，非开发环境通过 log4j 输出到 logs 目录中。
 不同类型到日志输出到不同的文件中，并根据日期切割，保留 15 天。
-各类型日志方法都通过 src/common/Log4j.logger.ts 对外提供，可以自行拓展日志类型。
+各类型日志方法都通过全局 Logger 模块以依赖注入的方式对外提供，可以自行拓展日志类型。
 
 ## 系统模块
 

@@ -1,36 +1,39 @@
 import {Logger} from "typeorm";
-import { loggerDB } from "@src/common/Log4j.logger";
+import { Logger as LoggerService } from './logger.service'
 
-export class TypeOrmLogger implements Logger{
+export class TypeOrmLogger implements Logger {
+  constructor(
+    private readonly loggerService: LoggerService
+  ) {}
   /**
    * Logs query and parameters used in it.
    */
   logQuery(query: string, parameters?: any[]): any {
-    loggerDB.info(query, parameters)
+    this.loggerService.loggerDB.info(query, parameters)
   }
   /**
    * Logs query that is failed.
    */
   logQueryError(error: string, query: string, parameters?: any[]): any {
-    loggerDB.error(error, query, parameters)
+    this.loggerService.loggerDB.error(error, query, parameters)
   }
   /**
    * Logs query that is slow.
    */
   logQuerySlow(time: number, query: string, parameters?: any[]): any {
-    loggerDB.warn(time, query, parameters)
+    this.loggerService.loggerDB.warn(time, query, parameters)
   }
   /**
    * Logs events from the schema build process.
    */
   logSchemaBuild(message): any{
-    loggerDB.info(message)
+    this.loggerService.loggerDB.info(message)
   }
   /**
    * Logs events from the migrations run process.
    */
   logMigration(message: string): any {
-    loggerDB.info(message)
+    this.loggerService.loggerDB.info(message)
   }
 
   /**
@@ -38,6 +41,6 @@ export class TypeOrmLogger implements Logger{
    * Log has its own level and message.
    */
   log(level: "log" | "info" | "warn", message: any): any {
-    loggerDB[level](message)
+    this.loggerService.loggerDB[level](message)
   }
 }

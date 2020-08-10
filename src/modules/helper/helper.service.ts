@@ -1,11 +1,14 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { loggerRequest } from 'src/common/Log4j.logger';
 import * as queryString from 'query-string';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { Logger } from '@modules/logger/logger.service';
 
 @Injectable()
 export class Helper {
-  constructor(private httpService: HttpService) {
+  constructor(
+    private httpService: HttpService,
+    private readonly logger: Logger,
+  ) {
     // 设置 axios 拦截器，打印日志
     this.httpService.axiosRef.interceptors.response.use((response) => {
       const log = {
@@ -15,7 +18,7 @@ export class Helper {
         status: response.status,
         data: JSON.stringify(response.data),
       }
-      loggerRequest.info(queryString.stringify(log, {encode: false, sort: false}))
+      this.logger.loggerRequest.info(queryString.stringify(log, {encode: false, sort: false}))
       return response;
     });
   }
