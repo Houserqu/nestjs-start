@@ -29,15 +29,6 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, document);
   }
 
-  // 全局参数校验 pipe
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true, 
-    // 自定义异常
-    exceptionFactory: (errors) => new ErrorException(
-      err.PARAMS_ERROR, _.flatten(errors.filter(item => !!item.constraints)
-      .map(item => Object.values(item.constraints))
-    ))}));
-
   await app.listen(8000);
 }
 
