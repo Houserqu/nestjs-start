@@ -1,5 +1,9 @@
-import { createParamDecorator } from '@nestjs/common';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-export const Jwt = createParamDecorator((data, req) => {
-  return req.user;
+/**
+ * 获取请求中 jwt payload 解析后的数据
+ */
+export const Jwt = createParamDecorator((data: unknown, ctx: ExecutionContext) => {
+  const request = ctx.switchToHttp().getRequest();
+  return request.user;
 });
