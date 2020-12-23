@@ -8,13 +8,12 @@ import { WeAppLoginDto } from './dto/WeAppLoginDto.dto';
 import { CreateWeAppUserDto } from '../user/dto/CreateWeAppUserDto.dto';
 import { WXBizDataCrypt } from '@utils/cryptoUtil';
 import { JwtPayload } from './auth.interface';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
-import { AuthPermission } from '@src/entity/AuthPermission';
-import { AuthUserRole } from '@src/entity/AuthUserRole';
-import { AuthRolePermission } from '@src/entity/AuthRolePermission';
+import { AuthPermission } from '@src/model/AuthPermission';
+import { AuthUserRole } from '@src/model/AuthUserRole';
+import { AuthRolePermission } from '@src/model/AuthRolePermission';
 import * as _ from 'lodash';
-import { Logger } from '@modules/logger/logger.service';
+import { Logger } from '@modules/helper/logger.service';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class AuthService {
@@ -25,12 +24,12 @@ export class AuthService {
     private readonly httpService: HttpService,
     private readonly logger: Logger,
 
-    @InjectRepository(AuthPermission)
-    private readonly permissionRepository: Repository<AuthPermission>,
-    @InjectRepository(AuthUserRole)
-    private readonly userRoleRepository: Repository<AuthUserRole>,
-    @InjectRepository(AuthRolePermission)
-    private readonly rolePermissionRepository: Repository<AuthRolePermission>,
+    @InjectModel(AuthPermission)
+    private permissionModel: typeof AuthPermission,
+    @InjectModel(AuthUserRole)
+    private userRoleModel: typeof AuthUserRole,
+    @InjectModel(AuthRolePermission)
+    private rolePermissionModel: typeof AuthRolePermission,
   ) {}
 
   /**
@@ -212,7 +211,7 @@ export class AuthService {
     type?: string,
   ): Promise<AuthPermission[]> {
     // 查用户所属的角色
-    const roles = await this.userRoleRepository.find({
+    const roles = await this.userRoleModel.findAll({
       where: {
         userId,
       },
@@ -224,9 +223,9 @@ export class AuthService {
     }
 
     // 查角色关联的权限 code
-    const rolePermissions = await this.rolePermissionRepository.find({
+    const rolePermissions = await this.rolePermissionModel.findAll({
       where: {
-        roleId: In(_.map(roles, 'roleId')),
+        roleId: _.map(roles, 'roleId'),
       },
     });
 
@@ -244,6 +243,6 @@ export class AuthService {
       where.type = type;
     }
 
-    return await this.permissionRepository.find({ where });
+    return await this.permissionModel.findAll({ where });
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import * as queryString from 'query-string';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Logger } from '@modules/logger/logger.service';
+import { Logger } from '@modules/helper/logger.service';
 
 @Injectable()
 export class Helper {

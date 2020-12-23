@@ -10,11 +10,12 @@ import { HelperModule } from '../helper/helper.module';
 import { PermissionGuard } from '@modules/auth/permission.guard';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { LoggerModule } from '@modules/logger/logger.module';
 import { AllExceptionsFilter } from '@src/common/allException.filter';
 import { TransformInterceptor } from '@src/common/transform.interceptor';
 import { ErrorException, err } from '@src/common/error.exception';
 import * as _ from 'lodash'
+import { SequelizeModule } from '@nestjs/sequelize';
+import { User } from '@modules/user/user.entity';
 
 // import { CacheModule } from '@modules/cache/cache.module';
 // import { MQModule } from '@modules/mq/mq.module';
@@ -35,7 +36,7 @@ import * as _ from 'lodash'
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'static'), // 静态文件目录
     }),
-    LoggerModule
+    SequelizeModule.forFeature([User])
     // CacheModule, 缓存
     // MQModule     消息队列
   ],

@@ -1,14 +1,14 @@
 import { Module, Global } from '@nestjs/common';
 import { ConfigService } from './config.service';
 import { ConfigController } from './config.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Config as DBConfig } from '@entity/Config';
+import { Config as DBConfig } from '@model/Config';
 import { DBConfigService } from './dbConfig.service';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 @Global()
 @Module({
   imports: [
-    TypeOrmModule.forFeature([DBConfig]),
+    SequelizeModule.forFeature([DBConfig]),
   ],
   providers: [
     {

@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@entity/User';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { User } from '@model/User';
 import { CreateUserDto } from './dto/CreateUserDto.dto';
 import { ErrorException, err } from '@common/error.exception';
 import { CreateWeAppUserDto } from './dto/CreateWeAppUserDto.dto';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectModel(User)
+    private userRepository: typeof User,
   ) {}
 
   async findOne(phone: string): Promise<User | undefined> {
@@ -52,7 +51,7 @@ export class UserService {
       const user = new User();
       user.phone = createUserDto.phone;
       user.nickname = createUserDto.nickname;
-      return this.userRepository.save(user)
+      return user.save()
     } catch (e) {
       throw new ErrorException(err.CREATE_USER_FAILD, e.message)
     }
@@ -79,7 +78,7 @@ export class UserService {
       user.province = createWeAppUserDto.province;
       user.city = createWeAppUserDto.city;
       user.appid = createWeAppUserDto.appid;
-      return this.userRepository.save(user)
+      return user.save()
     } catch (e) {
       throw new ErrorException(err.CREATE_USER_FAILD, e.message)
     }
@@ -114,6 +113,6 @@ export class UserService {
     }
 
     user.phone = phone;
-    return this.userRepository.save(user)
+    return user.save()
   }
 }

@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Config as DBConfig } from '@entity/Config';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import * as _ from 'lodash';
+import { Config as DBConfig } from '@model/Config';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class DBConfigService {
   constructor(
-    @InjectRepository(DBConfig)
-    private readonly configRepository: Repository<DBConfig>
+    @InjectModel(DBConfig)
+    private configModel: typeof DBConfig
   ) {}
 
   /**
@@ -20,11 +18,11 @@ export class DBConfigService {
       where.type = type
     }
 
-    const configs = await this.configRepository.find({
+    const configs = await this.configModel.findAll({
       where
     })
 
     // 转换成 obj 对象，便于前端查找
-    return _.keyBy(configs, 'code')
+    return configs
   }
 }

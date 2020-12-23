@@ -2,7 +2,7 @@ import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nes
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Request } from 'express';
-import { Logger } from '@modules/logger/logger.service';
+import { Logger } from '@modules/helper/logger.service';
 
 export interface Response<T> {
   data: T;

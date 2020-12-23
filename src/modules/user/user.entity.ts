@@ -1,61 +1,53 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Table, Column, Model, PrimaryKey } from 'sequelize-typescript';
 
-@Index("phone", ["phone"], { unique: true })
-@Entity("user")
-export class User {
-  @PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
+@Table({tableName: 'user', underscored: true})
+export class User extends Model{
+  @PrimaryKey
+  @Column
   id: number;
 
-  @Column("varchar", { name: "nickname", nullable: true, length: 255 })
+  @Column
   nickname: string | null;
 
-  @Column("varchar", { name: "phone", unique: true, length: 11 })
+  @Column
   phone: string;
 
-  @Column("varchar", { name: "password", nullable: true, length: 255 })
+  @Column
   password: string | null;
 
-  @Column("text", { name: "remark", nullable: true })
+  @Column
   remark: string | null;
 
-  @Column("int", { name: "type", nullable: true, default: () => "'1'" })
+  @Column
   type: number | null;
 
-  @Column("varchar", { name: "openid", nullable: true, length: 255 })
+  @Column
   openid: string | null;
 
-  @Column("varchar", { name: "unionid", nullable: true, length: 255 })
+  @Column
   unionid: string | null;
 
-  @Column("varchar", { name: "country", nullable: true, length: 255 })
+  @Column
   country: string | null;
 
-  @Column("varchar", { name: "province", nullable: true, length: 255 })
+  @Column
   province: string | null;
 
-  @Column("varchar", { name: "city", nullable: true, length: 255 })
+  @Column
   city: string | null;
 
-  @Column("int", { name: "gender", nullable: true, default: () => "'0'" })
+  @Column
   gender: number | null;
 
-  @Column("varchar", { name: "avatarUrl", nullable: true, length: 255 })
+  @Column
   avatarUrl: string | null;
 
-  @Column("varchar", { name: "appid", nullable: true, length: 35 })
+  @Column
   appid: string | null;
 
-  @Column("timestamp", {
-    name: "created",
-    nullable: true,
-    default: () => "CURRENT_TIMESTAMP"
-  })
-  created: Date | null;
+  @Column
+  createdAt: Date | null;
 
-  @Column("timestamp", {
-    name: "updated",
-    nullable: true,
-    default: () => "CURRENT_TIMESTAMP"
-  })
-  updated: Date | null;
+  @Column
+  updatedAt: Date | null;
 }

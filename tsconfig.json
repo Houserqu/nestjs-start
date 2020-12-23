@@ -10,12 +10,13 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "skipLibCheck": true,
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@utils/*": ["./src/utils/*"],
       "@src/*": ["./src/*"],
       "@common/*": ["./src/common/*"],
-      "@entity/*": ["./src/entity/*"]
+      "@model/*": ["./src/model/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

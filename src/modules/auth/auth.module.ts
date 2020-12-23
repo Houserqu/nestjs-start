@@ -8,11 +8,8 @@ import { JwtStrategy } from './jwt.strategy';
 import { ConfigService } from '../config/config.service';
 import { ConfigModule } from '../config/config.module';
 import { AuthController } from './auth.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthPermission } from '@src/entity/AuthPermission';
-import { AuthRole } from '@src/entity/AuthRole';
-import { AuthUserRole } from '@src/entity/AuthUserRole';
-import { AuthRolePermission } from '@src/entity/AuthRolePermission';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { AuthPermission, AuthRole, AuthRolePermission, AuthUserRole } from '@src/model';
 
 @Module({
   imports: [
@@ -25,7 +22,7 @@ import { AuthRolePermission } from '@src/entity/AuthRolePermission';
       }),
       inject: [ConfigService]
     }),
-    TypeOrmModule.forFeature([AuthPermission, AuthRole, AuthUserRole, AuthRolePermission]),
+    SequelizeModule.forFeature([AuthPermission, AuthRole, AuthUserRole, AuthRolePermission]),
     PassportModule,
     UserModule,
     HttpModule

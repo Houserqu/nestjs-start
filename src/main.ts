@@ -1,17 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@modules/app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
-import { ErrorException, err } from './common/error.exception';
-import * as _ from 'lodash'
-import { Logger } from '@modules/logger/logger.service';
+import { Logger } from '@modules/helper/logger.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: false
-  });
+  const app = await NestFactory.create(AppModule);
 
-  app.useLogger(app.get(Logger))
+  app.useLogger(app.get(Logger)) // 依赖注入日志服务
 
   // 跨域配置
   app.enableCors({
