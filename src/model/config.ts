@@ -13,13 +13,7 @@ export class Config extends Model<Config> {
     type!: string;
 
     @Column({ allowNull: true, type: DataType.STRING, comment: "\u5185\u5BB91" })
-    content1?: string;
-
-    @Column({ allowNull: true, type: DataType.STRING, comment: "\u5185\u5BB92" })
-    content2?: string;
-
-    @Column({ allowNull: true, type: DataType.STRING, comment: "\u5185\u5BB93" })
-    content3?: string;
+    value?: string;
 
     @Column({ field: "created_at", allowNull: true, type: DataType.DATE })
     createdAt?: Date;
