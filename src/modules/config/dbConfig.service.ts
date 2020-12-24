@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Config as DBConfig } from '@model/Config';
 import { InjectModel } from '@nestjs/sequelize';
+import * as _ from 'lodash'
 
 @Injectable()
 export class DBConfigService {
@@ -12,7 +13,7 @@ export class DBConfigService {
   /**
    * 获取数据中的配置
    */
-  async geConfigs(type?: string): Promise<DBConfig[]> {
+  async getConfigObj(type?: string): Promise<{[key: string]: DBConfig}> {
     const where: any = {}
     if(type) {
       where.type = type
@@ -23,6 +24,6 @@ export class DBConfigService {
     })
 
     // 转换成 obj 对象，便于前端查找
-    return configs
+    return _.keyBy(configs, 'code')
   }
 }

@@ -8,7 +8,6 @@ import { ApiOperation } from '@nestjs/swagger';
 import { Response } from 'express';
 import { DecodePhoneDto } from './dto/DecodePhoneDto.dto';
 import { ErrorException, err } from '@src/common/error.exception';
-import { Permission } from './permission.decorator'
 
 @Controller('auth')
 export class AuthController {

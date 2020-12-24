@@ -16,6 +16,6 @@ export class ConfigController {
   @ApiOperation({summary: '业务配置', tags: ['配置']})
   @Get('businessConfig')
   async getBusinessConfig() {
-    return await this.dbConfigService.geConfigs('BUSINESS')
+    return await this.dbConfigService.getConfigObj('BUSINESS')
   }
 }

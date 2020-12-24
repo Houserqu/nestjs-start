@@ -192,7 +192,6 @@ export class AuthService {
    * 根据 jwt token 获取 payload
    * @param {string} token
    * @returns {Promise<any>}
-   * @memberof AuthService
    */
   async getJwtPayload(token: string): Promise<any> {
     try {
@@ -205,6 +204,7 @@ export class AuthService {
   /**
    * 获取用户所有的 RBAC 权限
    * @param userId 用户id
+   * @param type
    */
   async getUserPermissions(
     userId: number,
@@ -243,6 +243,6 @@ export class AuthService {
       where.type = type;
     }
 
-    return await this.permissionModel.findAll({ where });
+    return this.permissionModel.findAll({ where });
   }
 }

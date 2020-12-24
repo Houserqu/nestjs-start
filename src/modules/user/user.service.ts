@@ -13,7 +13,7 @@ export class UserService {
   ) {}
 
   async findOne(phone: string): Promise<User | undefined> {
-    return await this.userRepository.findOne({
+    return this.userRepository.findOne({
       where: {
         phone,
       },
@@ -21,7 +21,7 @@ export class UserService {
   }
 
   async findUserByID(id: number): Promise<User | undefined> {
-    return await this.userRepository.findOne({
+    return this.userRepository.findOne({
       where: {
         id,
       },
@@ -29,7 +29,7 @@ export class UserService {
   }
 
   async findOneByUnionid(unionid: string): Promise<User | undefined> {
-    return await this.userRepository.findOne({
+    return this.userRepository.findOne({
       where: {
         unionid,
       },
