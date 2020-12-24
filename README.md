@@ -141,9 +141,8 @@ throw new ErrorException(err.USER_INFO_FAIL)
 
 ### 日志
 
-开发环境时，所有日志都在控制台输出，非开发环境通过 log4j 输出到 logs 目录中。
-不同类型到日志输出到不同的文件中，并根据日期切割，保留 15 天。
-各类型日志方法都通过全局 Logger 模块以依赖注入的方式对外提供，可以自行拓展日志类型。
+开发环境时，所有日志都在控制台输出，非开发环境通过 log4j 工具按天输出到 logs 目录中。
+各类型日志方法都通过全局 Helper 模块以依赖注入的方式对外提供，可以自行拓展日志类型。
 
 ## 系统模块
 
@@ -163,13 +162,15 @@ throw new ErrorException(err.USER_INFO_FAIL)
 
 数据库注册模块
 
-#### Typeorm
+#### Sequelize
 
-基于TypeScript 的 ORM 库. 支持 MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana, WebSQL 数据库。
+支持 TypeScript 的 ORM 库. 支持 MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, SAP Hana, WebSQL 等数据库。
+
+> 官方推荐的是 typeorm，实际使用发现不是很成熟，对复杂的 sql 支持不够完善，提供两个模式反而很迷惑
 
 **生成实体**
 
-typeorm 需要提前给每个表创建实体类，手动创建比较繁琐，可以通过 `npm run db` 命令直接同步数据库表结构自动创建实体类。
+sequelize 需要提前给每个表创建实体类，手动创建比较繁琐，可以通过 `npm run model` 命令直接同步数据库表结构自动创建实体类。
 > 数据库连接配置可以在 package.json 文件对应的 script 中修改
 
 ### Helper
@@ -177,6 +178,7 @@ typeorm 需要提前给每个表创建实体类，手动创建比较繁琐，可
 全局模块，工具类方法都封装在该模块中，便于其他模块调用
 
 - httpService: nest 提供的基于 Axios 的请求库，在这个基础上增加了日志记录功能，并对外封装 get,post,axios 方法
+- logger: 日志
 
 ### Auth
 
