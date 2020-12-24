@@ -152,7 +152,7 @@ throw new ErrorException(err.USER_INFO_FAIL)
 
 #### 静态配置
 
-.env 文件定义的配置，服务启动时会根据环境自动加载，重启服务才能生效
+.env 文件定义的配置，该文件不在版本库中，不依赖环境参数，示例配置参考 `doc/sample.env` 文件
 
 #### 动态配置
 
