@@ -1,7 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
-import { ErrorException, err } from './error.exception';
+import { ErrorException } from './error.exception';
 import { Logger } from '@modules/helper/logger.service';
-
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -25,8 +24,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
       if(exception instanceof ErrorException) {
         code = exceptionBody.code;
         data = exceptionBody.data || null;
-        msg = exceptionBody.msg;
-        status = 200
+        msg = exceptionBody.message;
+        status = HttpStatus.OK
       } else {
         code = exception.getStatus();
         data = exceptionBody.message || null;
@@ -36,9 +35,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
     } else {
       // 系统错误
       status = HttpStatus.INTERNAL_SERVER_ERROR
-      code = err.INTERNAL_SERVER_ERROR.code
-      msg = err.INTERNAL_SERVER_ERROR.message
-      data = null
+      code = 'SYSTEM_ERROR'
+      msg = '系统错误'
+      data = exception.message
       
       // 记录错误堆栈信息到日志中
       this.logger.error(exception.message, exception.stack)
@@ -47,7 +46,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(status);
     response.header('Content-Type', 'application/json; charset=utf-8');
 
-    // 异常响应体
     const resBody = { code, data, msg, t: new Date().getTime(), path: request.url };
 
     // 打印请求日志

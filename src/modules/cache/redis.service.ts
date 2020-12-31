@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as redis from "redis";
 import { ConfigService } from '@modules/config/config.service';
 import { promisify } from 'util'
-import { ErrorException, err } from '@src/common/error.exception';
+import { ErrorException } from '@src/common/error.exception';
 
 @Injectable()
 export class RedisService {
@@ -32,7 +32,7 @@ export class RedisService {
     try {
       return await this.sendCommand(commond, arg)
     } catch (error) {
-      throw new ErrorException(err.DB_REDIS_COMMAND_ERROR, error.message)
+      throw new ErrorException('REDIS_COMMAND_FAIL', 'Redis 执行命令失败')
     }
   }
 

@@ -13,6 +13,7 @@ export class Logger extends NestLogger{
   public loggerRequest;
   public loggerDB;
 
+  // 默认在控制台输出
   public logOutput = 'console';
 
   constructor(
@@ -103,7 +104,7 @@ export class Logger extends NestLogger{
   }
 
   doAccessLog(req: Request, resBody: any): void {
-    const info = `method=${req.method}&ip=${req.ip}&ua=${req.headers['user-agent']}&url=${req.url}&jwt=${JSON.stringify(req.user)}&query=${JSON.stringify(req.query)}&reqBody=${JSON.stringify(req.body)}&resBody=${JSON.stringify(resBody)}`;
+    const info = `${req.method} ${req.ip} ${req.headers['user-agent']} ${req.url} user=${JSON.stringify(req.user || null)} reqBody=${JSON.stringify(req.body)} resBody=${JSON.stringify(resBody)}`;
     if (this.logOutput === 'file') {
       this.loggerAccess.info(info);
     } else {

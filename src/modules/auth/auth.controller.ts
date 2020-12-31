@@ -7,7 +7,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation } from '@nestjs/swagger';
 import { Response } from 'express';
 import { DecodePhoneDto } from './dto/DecodePhoneDto.dto';
-import { ErrorException, err } from '@src/common/error.exception';
+import { ErrorException } from '@src/common/error.exception';
 
 @Controller('auth')
 export class AuthController {
@@ -29,7 +29,7 @@ export class AuthController {
       const {password, ...result} = user;
       return result;
     } else {
-      throw new ErrorException(err.USER_INFO_FAIL)
+      throw new ErrorException('USER_NOT_FOUND', '用户不存在')
     }
   }
 

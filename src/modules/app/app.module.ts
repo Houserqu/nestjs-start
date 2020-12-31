@@ -12,7 +12,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AllExceptionsFilter } from '@src/common/allException.filter';
 import { TransformInterceptor } from '@src/common/transform.interceptor';
-import { ErrorException, err } from '@src/common/error.exception';
+import { ErrorException } from '@src/common/error.exception';
 import * as _ from 'lodash'
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from '@modules/user/user.entity';
@@ -59,7 +59,7 @@ import { User } from '@modules/user/user.entity';
         transform: true, 
         // 自定义异常
         exceptionFactory: (errors) => new ErrorException(
-          err.PARAMS_ERROR, _.flatten(errors.filter(item => !!item.constraints)
+          'INVALID_PARAMS', '参数错误', _.flatten(errors.filter(item => !!item.constraints)
           .map(item => Object.values(item.constraints))
         ))})
     },

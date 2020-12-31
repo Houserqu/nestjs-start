@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@model/User';
 import { CreateUserDto } from './dto/CreateUserDto.dto';
-import { ErrorException, err } from '@common/error.exception';
+import { ErrorException } from '@common/error.exception';
 import { CreateWeAppUserDto } from './dto/CreateWeAppUserDto.dto';
 import { InjectModel } from '@nestjs/sequelize';
 
@@ -44,7 +44,7 @@ export class UserService {
     });
 
     if(findUser) {
-      throw new ErrorException(err.CREATE_PHONE_EXITED)
+      throw new ErrorException('PHONE_EXITED', '手机号已注册')
     }
 
     try {
@@ -53,7 +53,7 @@ export class UserService {
       user.nickname = createUserDto.nickname;
       return user.save()
     } catch (e) {
-      throw new ErrorException(err.CREATE_USER_FAILD, e.message)
+      throw new ErrorException('CREATE_USER_FAIL', '创建用户失败')
     }
   }
 
@@ -65,7 +65,7 @@ export class UserService {
     });
 
     if(findUser) {
-      throw new ErrorException(err.CREATE_PHONE_EXITED)
+      throw new ErrorException('PHONE_EXITED', '手机号已注册')
     }
 
     try {
@@ -80,7 +80,7 @@ export class UserService {
       user.appid = createWeAppUserDto.appid;
       return user.save()
     } catch (e) {
-      throw new ErrorException(err.CREATE_USER_FAILD, e.message)
+      throw new ErrorException('CREATE_USER_FAIL', '创建失败')
     }
   }
 
@@ -95,7 +95,7 @@ export class UserService {
 
       // 判断是否已经绑定手机号
       if(user.phone) {
-        throw new ErrorException(err.USER_PHONE_EXITED)
+        throw new ErrorException('SELF_BIND', '已绑定手机号')
       }
     }
 
@@ -108,7 +108,7 @@ export class UserService {
       });
 
       if (findPhoneUser) {
-        throw new ErrorException(err.PHONE_EXITED)
+        throw new ErrorException('OTHER_BIND', '手机号已被其他用户绑定')
       }
     }
 

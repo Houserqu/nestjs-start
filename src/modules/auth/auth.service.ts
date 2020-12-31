@@ -2,7 +2,7 @@ import { HttpService, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '../config/config.service';
-import { ErrorException, err } from '@common/error.exception';
+import { ErrorException } from '@common/error.exception';
 import { LoginDto } from './dto/login.dto';
 import { WeAppLoginDto } from './dto/WeAppLoginDto.dto';
 import { CreateWeAppUserDto } from '../user/dto/CreateWeAppUserDto.dto';
@@ -70,7 +70,7 @@ export class AuthService {
         userInfo: rest,
       };
     } else {
-      throw new ErrorException(err.LOGIN_FAIL);
+      throw new ErrorException('LOGIN_FAIL', '账号或密码错误');
     }
   }
 
@@ -143,7 +143,7 @@ export class AuthService {
         };
       }
     } else {
-      throw new ErrorException(err.CODE_FAIL);
+      throw new ErrorException('CODE_FAIL', '获取用户微信信息失败');
     }
   }
 
@@ -184,7 +184,7 @@ export class AuthService {
       await this.userService.bindPhone(phoneInfo.phoneNumber, userId);
       return phoneInfo.phoneNumber;
     } else {
-      throw new ErrorException(err.DECODE_PHONE_REQUEST_FAIL);
+      throw new ErrorException('GET_DECODE_FAIL', '请求微信失败');
     }
   }
 

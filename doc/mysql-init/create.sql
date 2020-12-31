@@ -90,7 +90,7 @@ CREATE TABLE `config` (
   `code` varchar(225) NOT NULL DEFAULT '' COMMENT '配置code',
   `desc` varchar(225) DEFAULT NULL COMMENT '说明',
   `type` varchar(225) NOT NULL DEFAULT '' COMMENT '类型',
-  `value` text COMMENT '内容1',
+  `value` text COMMENT '内容',
   `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`code`)
