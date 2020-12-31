@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import * as csurf from 'csurf';
 import { AppModule } from '@modules/app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from '@modules/helper/logger.service';
@@ -10,10 +11,10 @@ async function bootstrap() {
 
   // 跨域配置
   app.enableCors({
-    origin: process.env.NODE_ENV === 'production' ? ['https://baidu.com'] : '*'
+    origin: ''
   });
 
-  if(process.env.NODE_ENV === 'development') {
+  if(process.env.NODE_ENV !== 'production') {
     // swagger 文档
     const options = new DocumentBuilder()
       .setTitle('Swagger')

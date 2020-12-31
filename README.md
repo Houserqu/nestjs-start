@@ -117,21 +117,15 @@ export class AppController {
 对于业务逻辑类异常，封装了 ErrorException 异常类，继承于框架自带的 HttpException。ErrorException 构造方法接受固定格式的错误码对象，错误码对象需要在 src/common/error.exception.ts 文件中集中定义。使用示例如下：
 
 ```js
-// 定义用户信息失败异常
-const err = {
-  ...,
-  USER_INFO_FAIL: { code: 1208, msg: '获取用户信息失败，请先登录' },
-}
-
 // 业务逻辑中抛出异常
-throw new ErrorException(err.USER_INFO_FAIL)
+throw new ErrorException('USER_NOT_FOUND', '用户不存在')
 ```
 
 ### 接口协议
 
 ```js
 {
-  code: 200,  // 小于 1000 代表通用错误码，大于 1000 为业务错误码，200 = 成功
+  code: 0, // 0 或者空字符串则代表成功
   msg: "成功",
   data: {...},
   t: 1594727565012,

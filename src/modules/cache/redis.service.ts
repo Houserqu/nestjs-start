@@ -25,12 +25,12 @@ export class RedisService {
 
   /**
    * 执行 redis 命令（该方法可以执行任何命令，可以在该方法基础上给特定命令封装方法）
-   * @param commond 
+   * @param command
    * @param arg 
    */
-  async command(commond: string, ...arg) {
+  async command(command: string, ...arg) {
     try {
-      return await this.sendCommand(commond, arg)
+      return await this.sendCommand(command, arg)
     } catch (error) {
       throw new ErrorException('REDIS_COMMAND_FAIL', 'Redis 执行命令失败')
     }
