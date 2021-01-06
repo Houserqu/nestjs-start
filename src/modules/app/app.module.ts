@@ -10,7 +10,7 @@ import { HelperModule } from '../helper/helper.module';
 import { PermissionGuard } from '@modules/auth/permission.guard';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { AllExceptionsFilter } from '@src/common/allException.filter';
+import { AllExceptionsFilter } from '@common/exception.filter';
 import { TransformInterceptor } from '@src/common/transform.interceptor';
 import { ErrorException } from '@src/common/error.exception';
 import * as _ from 'lodash'

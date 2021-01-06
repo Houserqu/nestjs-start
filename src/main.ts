@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import * as csurf from 'csurf';
 import { AppModule } from '@modules/app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from '@modules/helper/logger.service';

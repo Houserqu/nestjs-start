@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@model/User';
-import { CreateUserDto } from './dto/CreateUserDto.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { ErrorException } from '@common/error.exception';
-import { CreateWeAppUserDto } from './dto/CreateWeAppUserDto.dto';
+import { CreateWeAppUserDto } from './dto/create-weapp-user.dto';
 import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()

@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Post, Req, Request, Res, UseGuards } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
-import { WeAppLoginDto } from './dto/WeAppLoginDto.dto';
+import { WeAppLoginDto } from './dto/weapp-login.dto';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation } from '@nestjs/swagger';
 import { Response } from 'express';
-import { DecodePhoneDto } from './dto/DecodePhoneDto.dto';
+import { DecodePhoneDto } from './dto/decode-phone.dto';
 import { ErrorException } from '@src/common/error.exception';
 
 @Controller('auth')

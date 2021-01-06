@@ -236,6 +236,15 @@ docker-compose -f "docker-compose.yml" up -d
 
 本地开发时 node 代码则没有用 docker 容器去跑，因为本地开发可能需要经常执行命令、重启服务等，用容器去跑有点多余。
 
+#### 开发规范
+
+##### 命名规范
+
+1. 文件名： kebab-case (短横线命名)
+2. 变量用： camelCase (驼峰命名)
+3. 类、类型： PascalCase (帕斯卡命名)
+4. 数据库字段： UnderScoreCase (下划线命名)
+
 ### 部署
 
 提供了基于 Docker 部署方式，可以不需要安装相关环境，直接运行。
