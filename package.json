@@ -52,7 +52,8 @@
     "rxjs": "^6.5.4",
     "sequelize": "^5.22.3",
     "sequelize-typescript": "^1.1.0",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",

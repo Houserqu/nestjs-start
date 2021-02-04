@@ -45,7 +45,7 @@ import { User } from '@modules/user/user.entity';
     {
       // 异常过滤器，格式化错误输出
       provide: APP_FILTER,
-      useClass: AllExceptionsFilter 
+      useClass: AllExceptionsFilter
     },    
     {
       // 全局拦截器
@@ -63,11 +63,11 @@ import { User } from '@modules/user/user.entity';
           .map(item => Object.values(item.constraints))
         ))})
     },
-    {
-      // 全局注册 RBAC 权限守卫, 配合 Permission 装饰器使用
-      provide: APP_GUARD,
-      useClass: PermissionGuard,
-    },
+    // {
+    //   // 全局注册 RBAC 权限守卫, 配合 Permission 装饰器使用
+    //   provide: APP_GUARD,
+    //   useClass: PermissionGuard,
+    // },
     AppService,
   ],
 })

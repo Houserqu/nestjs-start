@@ -1,12 +1,11 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { ErrorException } from './error.exception';
-import { Logger } from '@modules/helper/logger.service';
+import { logger, doAccessLog } from '@modules/helper/logger';
+import { getRequestId } from '@modules/helper/helper.utils';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  constructor(
-    private readonly logger: Logger
-  ){}
+  constructor(){}
 
   catch(exception: any, host: ArgumentsHost) {
 
@@ -40,7 +39,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       data = exception.message
       
       // 记录错误堆栈信息到日志中
-      this.logger.error(exception.message, exception.stack)
+      logger.error(getRequestId(request), exception.message, exception.stack)
     }
 
     response.status(status);
@@ -49,7 +48,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const resBody = { code, data, msg, t: new Date().getTime(), path: request.url };
 
     // 打印请求日志
-    this.logger.doAccessLog(request, resBody);
+    doAccessLog(request, resBody);
 
     response.send(resBody);
   }
