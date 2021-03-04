@@ -1,8 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AuthService } from './auth.service';
 import * as _ from 'lodash'
-import { PERMISSION_TYPES } from './constants';
 
 /**
  * 声明接口权限装饰器，配合权限守卫使用（PermissionGuard），需要提前注册权限守卫
@@ -11,7 +9,6 @@ import { PERMISSION_TYPES } from './constants';
 export class PermissionGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
-    private authService: AuthService
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -22,14 +19,14 @@ export class PermissionGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    
+
     // 如果请求中没有 user，代表用户未登录校验，无法获取用户信息
     if(!user) {
       return false
     }
     
     // 查出当前用户的所有权限列表
-    const userPermissions = await this.authService.getUserPermissions(user.userId, PERMISSION_TYPES.API)
+    const userPermissions = user.permissions || [] // 一般需要在身份校验阶段查出拥有都权限列表，并带到 user 对象上，然后在这里进行校验）
     // 要求的权限必须都有
     if(_.intersection(permissions, _.map(userPermissions, 'code')).length === permissions.length) {
       return true

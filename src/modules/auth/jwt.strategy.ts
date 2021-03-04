@@ -3,11 +3,14 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { JwtPayload } from './auth.interface';
+import { AuthService } from '@modules/auth/auth.service';
+import { PERMISSION_TYPES } from '@modules/auth/constants';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly configService: ConfigService,
+    private readonly authService: AuthService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -24,7 +27,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * @param payload 
    */
   async validate(payload: JwtPayload) {
+    // 查询用户信息，判断用户是否合法
 
+    // 查询权限
+    // const permissions = await this.authService.getUserPermissions(payload.userId, PERMISSION_TYPES.API)
     return payload
   }
 }

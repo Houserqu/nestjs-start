@@ -63,11 +63,11 @@ import { User } from '@modules/user/user.entity';
           .map(item => Object.values(item.constraints))
         ))})
     },
-    // {
-    //   // 全局注册 RBAC 权限守卫, 配合 Permission 装饰器使用
-    //   provide: APP_GUARD,
-    //   useClass: PermissionGuard,
-    // },
+    {
+      // 全局注册 RBAC 权限守卫, 配合 Permission 装饰器使用
+      provide: APP_GUARD,
+      useClass: PermissionGuard,
+    },
     AppService,
   ],
 })
