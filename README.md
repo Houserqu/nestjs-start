@@ -135,8 +135,15 @@ throw new ErrorException('USER_NOT_FOUND', '用户不存在')
 
 ### 日志
 
-开发环境时，所有日志都在控制台输出，非开发环境通过 log4j 工具按天输出到 logs 目录中。
-各类型日志方法都通过全局 Helper 模块以依赖注入的方式对外提供，可以自行拓展日志类型。
+#### 配置
+
+.env 中的 LOG_OUTPUT 可以配置日志输出方式，默认 console，支持 file
+file 模式会通过 log4j 工具按天输出到 logs 目录中，如果是通过 pm2 启动服务，记得配置 LOG4J_PM2 = 1。
+
+#### 日志ID
+
+为了便于日志查找，同一个请求产生的多条日志都会生成相同的日志ID。
+日志ID 默认取 Header 中的 X-Correlation-Id 字段，如果没有该值，则设置一个 uuid 
 
 ## 系统模块
 
