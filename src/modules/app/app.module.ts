@@ -17,9 +17,6 @@ import * as _ from 'lodash'
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from '@modules/user/user.entity';
 
-// import { CacheModule } from '@modules/cache/cache.module';
-// import { MQModule } from '@modules/mq/mq.module';
-
 /**
  * 根模块，所有需要使用的模块都需要在根模块引入
  * 被注释的模块默认没有开启，提供了基本示例，可以根据需要开启和修改相关模块代码
@@ -37,8 +34,6 @@ import { User } from '@modules/user/user.entity';
       rootPath: join(__dirname, '..', '..', '..', 'static'), // 静态文件目录
     }),
     SequelizeModule.forFeature([User])
-    // CacheModule, 缓存
-    // MQModule     消息队列
   ],
   controllers: [AppController],
   providers: [
