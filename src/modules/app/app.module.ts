@@ -14,8 +14,6 @@ import { AllExceptionsFilter } from '@common/exception.filter';
 import { TransformInterceptor } from '@src/common/transform.interceptor';
 import { ErrorException } from '@src/common/error.exception';
 import * as _ from 'lodash'
-import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from '@modules/user/user.entity';
 
 /**
  * 根模块，所有需要使用的模块都需要在根模块引入
@@ -33,7 +31,6 @@ import { User } from '@modules/user/user.entity';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'static'), // 静态文件目录
     }),
-    SequelizeModule.forFeature([User])
   ],
   controllers: [AppController],
   providers: [
