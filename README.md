@@ -210,6 +210,7 @@ RBAC（基于角色的权限控制）是企业软件常用的权限管理技术�
     ],
    ```
 2. 在需要鉴权的路由上用 `@Permission()` 装饰器声明权限，执行方法前鉴权守卫通过装饰器拿到需要的权限code，再去查找用户的 API 类型的权限，并判断声明的权限是否都拥有，如果没有则返回 ForbidException 异常
+   需要自行实现鉴权逻辑 `src/modules/auth/permission.guard.ts`
    ```ts
     @Get('needPermission')
     @Permission('DEMO')   // 权限声明装饰器

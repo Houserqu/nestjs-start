@@ -8,12 +8,7 @@ import { WeAppLoginDto } from './dto/weapp-login.dto';
 import { CreateWeAppUserDto } from '../user/dto/create-weapp-user.dto';
 import { WXBizDataCrypt } from '@utils/crypto-util';
 import { JwtPayload } from './auth.interface';
-import { AuthPermission } from '@src/model/AuthPermission';
-import { AuthUserRole } from '@src/model/AuthUserRole';
-import { AuthRolePermission } from '@src/model/AuthRolePermission';
-import * as _ from 'lodash';
 import { Logger } from '@modules/helper/logger.service';
-import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class AuthService {
@@ -23,13 +18,6 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
     private readonly logger: Logger,
-
-    @InjectModel(AuthPermission)
-    private permissionModel: typeof AuthPermission,
-    @InjectModel(AuthUserRole)
-    private userRoleModel: typeof AuthUserRole,
-    @InjectModel(AuthRolePermission)
-    private rolePermissionModel: typeof AuthRolePermission,
   ) {}
 
   /**
@@ -199,50 +187,5 @@ export class AuthService {
     } catch (e) {
       return null;
     }
-  }
-
-  /**
-   * 获取用户所有的 RBAC 权限
-   * @param userId 用户id
-   * @param type
-   */
-  async getUserPermissions(
-    userId: number,
-    type?: string,
-  ): Promise<AuthPermission[]> {
-    // 查用户所属的角色
-    const roles = await this.userRoleModel.findAll({
-      where: {
-        userId,
-      },
-    });
-
-    // 没有关联任何角色，返回空数组
-    if (roles.length === 0) {
-      return [];
-    }
-
-    // 查角色关联的权限 code
-    const rolePermissions = await this.rolePermissionModel.findAll({
-      where: {
-        roleId: _.map(roles, 'roleId'),
-      },
-    });
-
-    // 角色没有关联任何权限
-    if (rolePermissions.length === 0) {
-      return [];
-    }
-
-    // 查出所有权限
-    const where: any = {
-      code: _.uniq(_.map(rolePermissions, 'code')),
-    };
-
-    if (type) {
-      where.type = type;
-    }
-
-    return this.permissionModel.findAll({ where });
   }
 }

@@ -25,13 +25,12 @@ export class PermissionGuard implements CanActivate {
       return false
     }
     
-    // 查出当前用户的所有权限列表
-    const userPermissions = user.permissions || [] // 一般需要在身份校验阶段查出拥有都权限列表，并带到 user 对象上，然后在这里进行校验）
+    /*
+     * 查出当前用户的所有权限列表
+     * 一般需要在身份校验阶段查出拥有的权限列表，并带到 user 对象上，然后在这里进行校验）
+     */
+    const userPermissions = user.permissions || []
     // 要求的权限必须都有
-    if(_.intersection(permissions, _.map(userPermissions, 'code')).length === permissions.length) {
-      return true
-    }
-
-    return false
+    return _.intersection(permissions, _.map(userPermissions, 'code')).length === permissions.length;
   }
 }
