@@ -222,7 +222,8 @@ RBAC（基于角色的权限控制）是企业软件常用的权限管理技术�
 
 ### Cache
 
-缓存模块，基于 redis，且提供了一个对外的 command 方法用于执行任意 redis 命令
+缓存模块，基于 redis，且提供了一个对外的 command 方法用于执行任意 redis 命令。
+也可以考虑直接用官方提供的装饰器进行接口级别的缓存
 
 ## Docker
 
@@ -288,6 +289,12 @@ npx nest g -h # 帮助
 npx nest g module user modules       # 生成 User 模块
 npx nest g controller user modules   # 生成 User 控制器
 npx nest g service user modules      # 生成 User Service
+```
+
+Sequelize model 生成工具，可以直接根据数据库表结构在 src/model 目录创建对应的 model 文件，大大节省 model 定义工作
+
+```bash
+npm run model
 ```
 
 ### 路径别名
