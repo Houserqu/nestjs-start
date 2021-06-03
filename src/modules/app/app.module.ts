@@ -8,8 +8,6 @@ import { ConfigModule } from '../config/config.module';
 import { DatabaseModule } from '../database/database.module';
 import { HelperModule } from '../helper/helper.module';
 import { PermissionGuard } from '@modules/auth/permission.guard';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { AllExceptionsFilter } from '@common/exception.filter';
 import { TransformInterceptor } from '@src/common/transform.interceptor';
 import { ErrorException } from '@src/common/error.exception';
@@ -28,9 +26,6 @@ import * as _ from 'lodash'
     AuthModule,
     ConfigModule,
     DatabaseModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', '..', 'static'), // 静态文件目录
-    }),
   ],
   controllers: [AppController],
   providers: [
@@ -56,7 +51,7 @@ import * as _ from 'lodash'
         ))})
     },
     {
-      // 全局注册 RBAC 权限守卫, 配合 Permission 装饰器使用
+      // 全局注册权限守卫, 配合 Permission 装饰器使用
       provide: APP_GUARD,
       useClass: PermissionGuard,
     },

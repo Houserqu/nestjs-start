@@ -225,6 +225,22 @@ RBAC（基于角色的权限控制）是企业软件常用的权限管理技术�
 缓存模块，基于 redis，且提供了一个对外的 command 方法用于执行任意 redis 命令。
 也可以考虑直接用官方提供的装饰器进行接口级别的缓存
 
+### 静态文件
+
+静态文件目录 `static`，请求地址前缀为 `/static/`
+
+html 文件建议在 Controller 中定义地址并返回，例如首页：
+
+```ts
+  @Get('/')
+  async getHello(@Res() res: Response): Promise<any> {
+    res.sendFile(path.resolve(__dirname, '..', '..', '..', 'static/index.html'))
+  }
+```
+
+> 本项目并没有配置 hbs/ejs 等渲染引擎，因为现在大部分都是基于 React/Vue 开发的前后端分离的项目，不需要后端做服务端渲染。
+> 如果的确需要做服务端渲染，建议用 next/nuxt 单独起服务 
+
 ## Docker
 
 真的开发环境和生产环境提供了 Docker 支持，省去各种安装工作。也可以不使用。
