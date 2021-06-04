@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Request } from 'express';
 import { accessLogger } from '@common/logger';
 import * as _ from 'lodash';
+import { clsNamespace } from '@common/request.middleware';
 
 export interface Response<T> {
   data: T;
@@ -32,7 +33,7 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
           code: 0,
           msg: '成功',
           t: new Date().getTime(),
-          path: req.url
+          traceID: clsNamespace.get('traceID')
         };
 
         accessLogger.info(req.url, _.pick(req, ['ip', 'method', 'url', 'body', 'user']));

@@ -142,8 +142,8 @@ file 模式会通过 log4j 工具按天输出到 logs 目录中，如果是通�
 
 #### 日志ID
 
-为了便于日志查找，同一个请求产生的多条日志都会生成相同的日志ID。
-日志ID 默认取 Header 中的 X-Correlation-Id 字段，如果没有该值，则设置一个 uuid 
+基于 winston 的日志功能，并用 `nest-winston` 重新实现了 NestJs 自带的日志 Service，在不方便进行依赖注入的地方，也可以直接引用 `src/common/logger` 中的方法。
+了便于日志查找，同一个请求产生的多条日志都会生成相同的日志ID（tractID）。
 
 ## 系统模块
 

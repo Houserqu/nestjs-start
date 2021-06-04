@@ -2,6 +2,7 @@ import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from
 import { ErrorException } from './error.exception';
 import { accessLogger, logger } from '@common/logger';
 import * as _ from 'lodash'
+import { clsNamespace } from '@common/request.middleware';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -45,7 +46,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(status);
     response.header('Content-Type', 'application/json; charset=utf-8');
 
-    const resBody = { code, data, msg, t: new Date().getTime(), path: request.url };
+    const resBody = { code, data, msg, t: new Date().getTime(), traceID: clsNamespace.get('traceID') };
 
     // 打印请求日志
     accessLogger.info(request.url, _.pick(request, ['ip', 'method', 'url', 'body', 'user']));
