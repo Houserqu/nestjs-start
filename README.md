@@ -129,7 +129,7 @@ throw new ErrorException('USER_NOT_FOUND', '用户不存在')
   msg: "成功",
   data: {...},
   t: 1594727565012,
-  path: '/'
+  traceID: '45c076e9-faf9-4f05-95f2-0e21eca615a8'
 }
 ```
 
