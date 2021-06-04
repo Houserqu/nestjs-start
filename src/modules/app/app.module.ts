@@ -1,4 +1,4 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { Logger, Module, ValidationPipe } from '@nestjs/common';
 import { APP_GUARD, APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -55,6 +55,7 @@ import * as _ from 'lodash'
       provide: APP_GUARD,
       useClass: PermissionGuard,
     },
+    Logger,
     AppService,
   ],
 })

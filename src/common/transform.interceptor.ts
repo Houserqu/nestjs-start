@@ -2,7 +2,8 @@ import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nes
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Request } from 'express';
-import { doAccessLog } from '@modules/helper/logger';
+import { accessLogger } from '@common/logger';
+import * as _ from 'lodash';
 
 export interface Response<T> {
   data: T;
@@ -34,7 +35,7 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
           path: req.url
         };
 
-        doAccessLog(req, resBody); // 记录请求日志
+        accessLogger.info(req.url, _.pick(req, ['ip', 'method', 'url', 'body', 'user']));
 
         return resBody;
       }),

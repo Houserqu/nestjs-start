@@ -8,7 +8,7 @@ import { WeAppLoginDto } from './dto/weapp-login.dto';
 import { CreateWeAppUserDto } from '../user/dto/create-weapp-user.dto';
 import { WXBizDataCrypt } from '@utils/crypto-util';
 import { JwtPayload } from './auth.interface';
-import { Logger } from '@modules/helper/logger.service';
+import { accessLogger } from '@common/logger';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
-    private readonly logger: Logger,
   ) {}
 
   /**
@@ -77,7 +76,7 @@ export class AuthService {
     const requestUrl = `${url}?appid=${appid}&secret=${secret}&grant_type=${grantType}&js_code=${weAppLoginDto.code}`;
     const codeRes: any = await this.httpService.get(requestUrl).toPromise();
 
-    this.logger.doRequestLog(requestUrl, codeRes.data)
+    accessLogger.info(requestUrl)
 
     // 从加密数据中获取 unionid
     const encryptedInfo = WXBizDataCrypt(

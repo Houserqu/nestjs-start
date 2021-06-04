@@ -1,18 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@modules/app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { Logger } from '@modules/helper/logger.service';
 import { RequestMiddleware } from '@common/request.middleware';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { getWinstonConfig } from '@common/logger';
+import { WinstonModule } from 'nest-winston';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: WinstonModule.createLogger(getWinstonConfig('DEFAULT'))
+  });
 
-  // 依赖注入日志服务
-  app.useLogger(await app.resolve(Logger))
-
-  // 请求处理中间件：处理 request-id
+  // 请求处理中间件：处理 traceID
   app.use(RequestMiddleware);
 
   // 跨域配置

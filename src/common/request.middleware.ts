@@ -1,9 +1,21 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response, NextFunction } from 'express';
+import { createNamespace } from 'cls-hooked';
+
+export const clsNamespace = createNamespace('app')
 
 export function RequestMiddleware(req: Request, res: Response, next: NextFunction) {
-  // 如果 header 已经有 x-correlation-id，则直接使用
-  req.headers['x-correlation-id'] = req.headers['x-correlation-id'] || uuidv4()
-  res.setHeader('X-Correlation-Id', req.headers['x-correlation-id'])
-  next();
+  /*
+   * 绑定 async hooks，添加 traceID，用日志记录
+   */
+  clsNamespace.bind(req)
+  clsNamespace.bind(res)
+
+  const traceID = uuidv4()
+
+  clsNamespace.run(() => {
+    clsNamespace.set('traceID', traceID)
+
+    next()
+  })
 }

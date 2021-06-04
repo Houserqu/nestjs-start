@@ -34,12 +34,13 @@
     "cache-manager": "^3.3.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.0-rc.0",
+    "cls-hooked": "^4.2.2",
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "lodash": "^4.17.19",
-    "log4js": "^6.2.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
+    "nest-winston": "^1.5.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -51,7 +52,9 @@
     "sequelize": "^5.22.3",
     "sequelize-typescript": "^1.1.0",
     "swagger-ui-express": "^4.1.4",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",

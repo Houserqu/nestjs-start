@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Logger } from '@modules/helper/logger.service';
+import { dbLogger } from '@common/logger';
 
 @Module({
   imports: [
     SequelizeModule.forRootAsync({
-      useFactory: (configService, logger) => ({
+      useFactory: (configService) => ({
         dialect: 'mysql',
         host:  configService.get('MYSQL_HOST'),
         port: configService.get('MYSQL_PORT'),
@@ -15,9 +15,9 @@ import { Logger } from '@modules/helper/logger.service';
         database: configService.get('MYSQL_DATABASE'),
         autoLoadModels: true,
         synchronize: false,
-        logging: msg => logger.db(msg)
+        logging: msg => dbLogger.info(msg)
       }),
-      inject: [ConfigService, Logger]
+      inject: [ConfigService]
     }),
   ],
 })
