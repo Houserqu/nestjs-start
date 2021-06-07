@@ -4,7 +4,7 @@ import { WeAppLoginDto } from './dto/weapp-login.dto';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { Response } from 'express';
 import { DecodePhoneDto } from './dto/decode-phone.dto';
 import { ErrorException } from '@src/common/error.exception';
@@ -23,6 +23,7 @@ export class AuthController {
   @UseGuards(AuthGuard())
   @Get('userinfo')
   @ApiOperation({summary: '个人信息', tags: ['用户鉴权']})
+  @ApiBearerAuth()
   async getProfile(@Request() req) {
     const user = await this.userService.findUserByID(req.user.userId);
     if(user) {
@@ -46,7 +47,7 @@ export class AuthController {
       result = await this.authService.loginByPassword(loginDto);
     }
     res.setHeader('jwt-set', result.accessToken);
-    return result
+    res.send({ code: 0, msg: '成功', t: new Date().getTime()})
   }
 
   /**

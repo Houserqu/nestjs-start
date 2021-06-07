@@ -9,6 +9,7 @@ import { CreateWeAppUserDto } from '../user/dto/create-weapp-user.dto';
 import { WXBizDataCrypt } from '@utils/crypto-util';
 import { JwtPayload } from './auth.interface';
 import { accessLogger } from '@common/logger';
+import { Helper } from '@modules/helper/helper.service';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    private readonly httpService: HttpService,
+    private readonly helper: Helper
   ) {}
 
   /**
@@ -74,7 +75,7 @@ export class AuthService {
     const grantType = this.configService.get('WEAPP_GRANT_TYPE');
 
     const requestUrl = `${url}?appid=${appid}&secret=${secret}&grant_type=${grantType}&js_code=${weAppLoginDto.code}`;
-    const codeRes: any = await this.httpService.get(requestUrl).toPromise();
+    const codeRes: any = await this.helper.get(requestUrl);
 
     accessLogger.info(requestUrl)
 
@@ -154,11 +155,7 @@ export class AuthService {
     const secret = this.configService.get('WEAPP_SECRET');
     const grantType = this.configService.get('WEAPP_GRANT_TYPE');
 
-    const codeRes: any = await this.httpService
-      .get(
-        `${url}?appid=${appid}&secret=${secret}&grant_type=${grantType}&js_code=${code}`,
-      )
-      .toPromise();
+    const codeRes: any = await this.helper.get(`${url}?appid=${appid}&secret=${secret}&grant_type=${grantType}&js_code=${code}`)
 
     if (codeRes && codeRes.data.session_key) {
       const phoneInfo = WXBizDataCrypt(

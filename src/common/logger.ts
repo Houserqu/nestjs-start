@@ -26,6 +26,7 @@ export function getWinstonConfig(label: string) {
       traceID(),
       winston.format.timestamp(),
       winston.format.json(),
+      winston.format.prettyPrint()
     ),
     transports: [transport],
   };
@@ -39,3 +40,5 @@ export const requestLogger = winston.createLogger(getWinstonConfig('REQUEST'));
 export const dbLogger = winston.createLogger(getWinstonConfig('DB'));
 // 通用日志
 export const logger = winston.createLogger(getWinstonConfig('DEFAULT'));
+// 系统错误日志
+export const errorLogger = winston.createLogger(getWinstonConfig('ERROR'));

@@ -1,7 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { ErrorException } from './error.exception';
-import { accessLogger, logger } from '@common/logger';
-import * as _ from 'lodash'
+import { errorLogger } from '@common/logger';
 import { clsNamespace } from '@common/request.middleware';
 
 @Catch()
@@ -38,18 +37,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
       code = 'SYSTEM_ERROR'
       msg = '系统错误'
       data = exception.message
-      
-      // 记录错误堆栈信息到日志中
-      logger.error(exception.message, exception)
+
+      errorLogger.error('系统错误', exception)
     }
 
     response.status(status);
     response.header('Content-Type', 'application/json; charset=utf-8');
 
     const resBody = { code, data, msg, t: new Date().getTime(), traceID: clsNamespace.get('traceID') };
-
-    // 打印请求日志
-    accessLogger.info(request.url, _.pick(request, ['ip', 'method', 'url', 'body', 'user']));
 
     response.send(resBody);
   }
