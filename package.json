@@ -20,7 +20,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "model": "npx stg -D mysql -h localhost -p 3306 -d nestjs -u root -x root --indices --case pascal:camel --out-dir ./src/model --clean \n"
+    "model": "npx stg -D mysql -h localhost -p 3306 -d nestjs -u root -x root --indices --case pascal:camel --out-dir ./src/model --clean \n",
+    "vue-serve": "vue-cli-service serve",
+    "vue-build": "vue-cli-service build --no-clean",
+    "vue-lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@alicloud/pop-core": "^1.7.9",
@@ -81,7 +84,12 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "vue-template-compiler": "^2.6.11"
   },
   "jest": {
     "moduleFileExtensions": [
