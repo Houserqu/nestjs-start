@@ -5,7 +5,7 @@
   <p align="center">
 
 ## Description
- 
+
 基于 [Nest](https://github.com/nestjs/nest) 快速启动项目，包含了项目开发常用功能模块和最佳实践。
 
 ## 命令
@@ -241,7 +241,21 @@ html 文件建议在 Controller 中定义地址并返回，例如首页：
 ```
 
 > 本项目并没有配置 hbs/ejs 等渲染引擎，因为现在大部分都是基于 React/Vue 开发的前后端分离的项目，不需要后端做服务端渲染。
-> 如果的确需要做服务端渲染，建议用 next/nuxt 单独起服务 
+> 如果的确需要做服务端渲染，建议用 next/nuxt 单独起服务，或者参考官网配置
+
+## 前端开发
+
+为了便于前后端代码在一起的单体应用的开发，本项目集成了基于 vue-cli 的 VUE 开发配置。
+
+### 开发
+
+VUE 源代码目录为 `vue/`，构建后的目录为 `static/`。运行 `npm run vue-serve` 启动 webpack dev server，同时也会写入实时编译后的文件到 `static` 目录中，这样做是为了保持跟生产环境部署的时候一致，通过 NestJS 提供的服务去返回前端文件。
+
+html 文件也会编译到 `static/` 目录中，html 页面的响应在 Controller 中控制（见[静态文件](#静态文件)）。
+
+### 部署
+
+运行 `npm run vue-build` 命令会构建 vue 代码到  `static/` 目录。如果需要使用 CDN 或者容器构建等特殊流程，请根据需要调整代码。
 
 ## Docker
 
