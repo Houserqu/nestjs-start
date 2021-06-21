@@ -43,7 +43,7 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, document);
   }
 
-  await app.listen(8000);
+  await app.listen(process.env.NEST_SERVER_PORT || 8000);
 }
 
 bootstrap();
