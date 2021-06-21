@@ -1,7 +1,6 @@
 import { HttpService, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '../config/config.service';
 import { ErrorException } from '@common/error.exception';
 import { LoginDto } from './dto/login.dto';
 import { WeAppLoginDto } from './dto/weapp-login.dto';
@@ -16,7 +15,6 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
     private readonly helper: Helper
   ) {}
 
@@ -70,9 +68,9 @@ export class AuthService {
    */
   async loginByWeApp(weAppLoginDto: WeAppLoginDto): Promise<any> {
     const url = 'https://api.weixin.qq.com/sns/jscode2session';
-    const appid = this.configService.get('WEAPP_APPID');
-    const secret = this.configService.get('WEAPP_SECRET');
-    const grantType = this.configService.get('WEAPP_GRANT_TYPE');
+    const appid = process.env.NEST_WEAPP_APPID;
+    const secret = process.env.NEST_WEAPP_SECRET;
+    const grantType = process.env.NEST_WEAPP_GRANT_TYPE;
 
     const requestUrl = `${url}?appid=${appid}&secret=${secret}&grant_type=${grantType}&js_code=${weAppLoginDto.code}`;
     const codeRes: any = await this.helper.get(requestUrl);
@@ -151,9 +149,9 @@ export class AuthService {
     userId: number,
   ): Promise<any> {
     const url = 'https://api.weixin.qq.com/sns/jscode2session';
-    const appid = this.configService.get('WEAPP_APPID');
-    const secret = this.configService.get('WEAPP_SECRET');
-    const grantType = this.configService.get('WEAPP_GRANT_TYPE');
+    const appid = process.env.NEST_WEAPP_APPID;
+    const secret = process.env.NEST_WEAPP_SECRET;
+    const grantType = process.env.NEST_WEAPP_GRANT_TYPE;
 
     const codeRes: any = await this.helper.get(`${url}?appid=${appid}&secret=${secret}&grant_type=${grantType}&js_code=${code}`)
 

@@ -1,23 +1,19 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from '../config/config.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { dbLogger } from '@common/logger';
 
 @Module({
   imports: [
-    SequelizeModule.forRootAsync({
-      useFactory: (configService) => ({
-        dialect: 'mysql',
-        host:  configService.get('MYSQL_HOST'),
-        port: configService.get('MYSQL_PORT'),
-        username: configService.get('MYSQL_USER'),
-        password: configService.get('MYSQL_PASSWORD'),
-        database: configService.get('MYSQL_DATABASE'),
-        autoLoadModels: true,
-        synchronize: false,
-        logging: msg => dbLogger.info(msg)
-      }),
-      inject: [ConfigService]
+    SequelizeModule.forRoot({
+      dialect: 'mysql',
+      host: process.env.NEST_MYSQL_HOST,
+      port: parseInt(process.env.NEST_MYSQL_PORT),
+      username: process.env.NEST_MYSQL_USER,
+      password: process.env.NEST_MYSQL_PASSWORD,
+      database: process.env.NEST_MYSQL_DATABASE,
+      autoLoadModels: true,
+      synchronize: false,
+      logging: msg => dbLogger.info(msg)
     }),
   ],
 })

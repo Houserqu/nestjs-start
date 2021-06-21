@@ -11,23 +11,29 @@ const traceID = winston.format((info) => {
 // 根据 label 生成 winston 配置
 export function getWinstonConfig(label: string) {
   // 开发环境输出到文件
-  const transport = process.env.NODE_ENV === 'production' ? new DailyRotateFile({
+  const transport = process.env.NEST_LOG_OUTPUT === 'file' ? new DailyRotateFile({
     dirname: 'logs',
     filename: 'nestjs-%DATE%.log',
     datePattern: 'YYYY-MM-DD',
     maxFiles: '14d',
   }) : new winston.transports.Console();
 
+  // 格式化配置
+  const formats = [
+    traceID(),
+    winston.format.timestamp(),
+    winston.format.json(),
+  ]
+
+  if(process.env.NEST_LOG_OUTPUT === 'console') {
+    formats.push(winston.format.prettyPrint()) // 日志格式化
+  }
+
   return {
     defaultMeta: {
       label,
     },
-    format: winston.format.combine(
-      traceID(),
-      winston.format.timestamp(),
-      winston.format.json(),
-      winston.format.prettyPrint()
-    ),
+    format: winston.format.combine(...formats),
     transports: [transport],
   };
 }

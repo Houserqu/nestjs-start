@@ -4,7 +4,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
-import { ConfigModule } from '../config/config.module';
 import { DatabaseModule } from '../database/database.module';
 import { HelperModule } from '../helper/helper.module';
 import { PermissionGuard } from '@modules/auth/permission.guard';
@@ -24,7 +23,6 @@ import * as _ from 'lodash'
     HelperModule,
     UserModule,
     AuthModule,
-    ConfigModule,
     DatabaseModule,
   ],
   controllers: [AppController],
