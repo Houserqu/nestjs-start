@@ -27,11 +27,10 @@ $ npx nest g service name    # 创建 service
 ```
 .
 ├── README.md
-├── development.env                   // 开发环境静态配置
+├── .env                   // 开发环境静态配置
 ├── nest-cli.json
 ├── package.json
 ├── pm2.json                          // pm2 配置
-├── production.env                    // 生产环境静态配置
 ├── src
 │   ├── common                        // 公共组件目录
 │   │   ├── allException.filter.ts    // 所有异常过滤器
@@ -54,18 +53,15 @@ $ npx nest g service name    # 创建 service
 │   │   │   └── ...
 │   │   ├── cache                     // 缓存模块
 │   │   │   └── ...
-│   │   ├── config                    // 配置模块
-│   │   │   └── ...
 │   │   ├── database                  // 数据库模块
 │   │   │   └── ...
 │   │   ├── helper                    // 辅助方法模块
 │   │   │   └── ...
-│   │   ├── mq                        // 消息队里模块
-│   │   │   └── ...
 │   │   └── user                      // 用户模块
 │   │       └── ...
 │   └── utils                         // 工具方法
-├── static                            // 静态文件目录
+├── static                            // 前端静态文件目录
+├── public                            // 静态文件目录
 ├── test                              // 单元测试目录
 │   └── ...
 ├── tsconfig.build.json

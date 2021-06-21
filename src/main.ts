@@ -28,6 +28,8 @@ async function bootstrap() {
     prefix: '/static/'
   });
 
+  // 静态文件配置，路径前缀为 /，用于部署非前端构建的静态文件
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   if(process.env.NODE_ENV !== 'production') {
     // swagger 文档

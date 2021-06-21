@@ -2,6 +2,7 @@
 /dist
 /node_modules
 /static
+/public
 # env config file
 .env
 
