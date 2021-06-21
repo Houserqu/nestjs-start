@@ -22,8 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "model": "npx stg -D mysql -h localhost -p 3306 -d nestjs -u root -x root --indices --case pascal:camel --out-dir ./src/model --clean \n",
     "vue-serve": "vue-cli-service serve",
-    "vue-build": "vue-cli-service build --no-clean",
-    "vue-lint": "vue-cli-service lint"
+    "vue-build": "vue-cli-service build --no-clean"
   },
   "dependencies": {
     "@alicloud/pop-core": "^1.7.9",
