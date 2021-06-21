@@ -5,20 +5,14 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
-import { ConfigService } from '../config/config.service';
-import { ConfigModule } from '../config/config.module';
 import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }), // AuthGuard 的默认鉴权策略
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET'),
-        signOptions: { expiresIn: configService.get('JWT_EXPIRE') }
-      }),
-      inject: [ConfigService]
+    JwtModule.register({
+      secret: process.env.NEST_JWT_SECRET,
+      signOptions: { expiresIn: process.env.NEST_JWT_EXPIRE }
     }),
     PassportModule,
     UserModule,

@@ -1,3 +1,5 @@
+require('dotenv').config() // 加载 .env 中的配置到环境变量
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@modules/app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -8,6 +10,7 @@ import { getWinstonConfig } from '@common/logger';
 import { WinstonModule } from 'nest-winston';
 
 async function bootstrap() {
+
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: WinstonModule.createLogger(getWinstonConfig('DEFAULT'))
   });
