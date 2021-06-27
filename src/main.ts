@@ -6,14 +6,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { RequestMiddleware } from '@common/request.middleware';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
-import { getWinstonConfig } from '@common/logger';
-import { WinstonModule } from 'nest-winston';
 
 async function bootstrap() {
 
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: WinstonModule.createLogger(getWinstonConfig('DEFAULT'))
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // 请求处理中间件：处理 traceID
   app.use(RequestMiddleware);
